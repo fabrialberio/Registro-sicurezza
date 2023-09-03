@@ -1,0 +1,9 @@
+{
+    "require": {
+        "firebase/php-jwt": "^6.4",
+        "almasaeed2010/adminlte": "^3.2",
+        "fortawesome/font-awesome": "^6.4",
+        "ext-mysqli": "*",
+        "setasign/tfpdf": "^1.33"
+    }
+}

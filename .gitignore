@@ -1,0 +1,9 @@
+composer.phar
+vendor/
+
+database/credentials.json
+*.key
+
+*.test*
+
+.vscode/
