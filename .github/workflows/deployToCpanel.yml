@@ -1,0 +1,38 @@
+name: Deploy Private GitHub repository to cPanel
+on:
+  push:
+    branches:
+      - master
+jobs:
+  FTP-Deploy-Action:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: 🗝 Insert secrets
+        env:
+          DATABASE_CREDENTIALS_JSON: ${{ secrets.DATABASE_CREDENTIALS_JSON }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+        run: |
+          echo "$DATABASE_CREDENTIALS_JSON" > database/credentials.json
+          echo "$JWT_PRIVATE_KEY" > jwtRS256.key
+
+      - name: 🐘 Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'  # Adjust to your desired PHP version
+      
+      - name: 🎼 Install Composer dependencies
+        run: composer install
+
+      - name: 📂 Sync folders and files to the server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
