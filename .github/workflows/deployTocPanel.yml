@@ -17,8 +17,10 @@ jobs:
       - name: 🗝 Insert secrets
         env:
           DATABASE_CREDENTIALS_JSON: ${{ secrets.DATABASE_CREDENTIALS_JSON }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
         run: |
           echo "$DATABASE_CREDENTIALS_JSON" > database/credentials.json
+          echo "$JWT_PRIVATE_KEY" > jwtRS256.key
 
       - name: 🐘 Setup PHP
         uses: shivammathur/setup-php@v2
