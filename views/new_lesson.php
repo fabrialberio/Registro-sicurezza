@@ -25,7 +25,7 @@ if (!isset($_POST['classe'])) {
   <link rel="stylesheet" href="../vendor/fortawesome/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="../vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
   <!-- Script per aggiornare dinamicamente gli input degli argomenti -->
-  <script src="inputArgomenti.js"></script>
+  <script src="../src/inputArgomenti.js"></script>
   <script>
     window.onload = function () {
       const divArgomenti = document.getElementById("divArgomenti");
