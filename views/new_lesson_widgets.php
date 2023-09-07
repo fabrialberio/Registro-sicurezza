@@ -35,6 +35,11 @@ function generate_input_data(?string $data = null) {
 }
 
 function generate_input_ora(?string $ora_inizio = null, ?string $ora_fine = null) {
+    // Generate two dropdowns, with hours from 8 to 16
+    // The first dropdown is for the start time, the second for the end time
+    // The second dropdown has the first option disabled, so the user can't select an end time before the start time
+    // The second dropdown has the first option selected, so the user can't submit the form without selecting an end time
+
     if (is_null($ora_inizio)) {
         $ora_inizio = date('H:00');
     }
@@ -42,8 +47,19 @@ function generate_input_ora(?string $ora_inizio = null, ?string $ora_fine = null
         $ora_fine =  date('H:00', strtotime('+1 hour', strtotime($ora_inizio)));
     }
 
-    echo "<input id='inputOraInizio' type='time' step='3600' name='ora_inizio' class='form-control mb-1' value='$ora_inizio' min='08:00', max='15:00'/>";
-    echo "<input id='inputOraFine' type='time' step='3600' name='ora_fine' class='form-control' value='$ora_fine' min='09:00', max='16:00'/>";
+    echo "<select name='ora_inizio' class='custom-select mb-1'>";
+    for ($i = 8; $i <= 15; $i++) {
+        $ora = str_pad($i, 2, '0', STR_PAD_LEFT) . ':00';
+        echo "<option value='$ora'" . ($ora == $ora_inizio ? ' selected' : '') . ">$ora</option>";
+    }
+    echo "</select>";
+
+    echo "<select name='ora_fine' class='custom-select'>";
+    for ($i = 9; $i <= 16; $i++) {
+        $ora = str_pad($i, 2, '0', STR_PAD_LEFT) . ':00';
+        echo "<option value='$ora'" . ($ora == $ora_fine ? ' selected' : '') . ">$ora</option>";
+    }
+    echo "</select>";
 }
 
 function generate_datalist_argomenti() {
