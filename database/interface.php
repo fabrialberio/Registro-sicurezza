@@ -7,6 +7,7 @@ if (file_exists(__DIR__ . '/credentials.json')) {
     die('Credenziali del database non trovate in `database/credentials.json`');
 }
 
+
 $connection = mysqli_connect(
     $credentials['host'],
     $credentials['username'],
@@ -128,7 +129,7 @@ function get_lezione(int $id_lezione): array {
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, id_docente, id_classe, date_format(ora_inizio, '%h:%i') AS ora_inizio, date_format(ora_fine, '%h:%i') AS ora_fine, UNIX_TIMESTAMP(data) AS data
+        "SELECT id, id_docente, id_classe, date_format(ora_inizio, '%H:%i') AS ora_inizio, date_format(ora_fine, '%H:%i') AS ora_fine, UNIX_TIMESTAMP(data) AS data
         FROM lezione
         WHERE id=$id_lezione"
     );
@@ -335,7 +336,7 @@ function get_lezioni_filter(
 ) {
     global $connection;
 
-    $query = "SELECT DISTINCT lezione.id, id_docente, id_classe, date_format(ora_inizio, '%h:%i') AS ora_inizio, date_format(ora_fine, '%h:%i') AS ora_fine, UNIX_TIMESTAMP(data) AS data, aggiunta
+    $query = "SELECT DISTINCT lezione.id, id_docente, id_classe, date_format(ora_inizio, '%H:%i') AS ora_inizio, date_format(ora_fine, '%H:%i') AS ora_fine, UNIX_TIMESTAMP(data) AS data, aggiunta
         FROM lezione
         LEFT JOIN argomento_svolto ON lezione.id = argomento_svolto.id_lezione
         WHERE 1=1";
