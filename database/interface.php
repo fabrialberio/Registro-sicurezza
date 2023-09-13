@@ -129,7 +129,7 @@ function get_lezione(int $id_lezione): array {
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, id_docente, id_classe, date_format(ora_inizio, '%H:%i') AS ora_inizio, date_format(ora_fine, '%H:%i') AS ora_fine, UNIX_TIMESTAMP(data) AS data
+        "SELECT id, id_docente, id_classe, date_format(ora_inizio, '%H:%i') AS ora_inizio, date_format(ora_fine, '%H:%i') AS ora_fine, UNIX_TIMESTAMP(data) AS data, aggiunta, eliminata
         FROM lezione
         WHERE id=$id_lezione"
     );
@@ -260,8 +260,8 @@ function add_lezione(
 
     mysqli_query(
         $connection,
-        "INSERT INTO lezione(id_docente, id_classe, ora_inizio, ora_fine, data, aggiunta) VALUES
-        ($id_docente, $id_classe, '$ora_inizio', '$ora_fine', '$data', '$aggiunta')"
+        "INSERT INTO lezione(id_docente, id_classe, ora_inizio, ora_fine, data, aggiunta, eliminata) VALUES
+        ($id_docente, $id_classe, '$ora_inizio', '$ora_fine', '$data', '$aggiunta', FALSE)"
     );
 
     return mysqli_insert_id($connection);
@@ -303,24 +303,13 @@ function add_presenza(
     return mysqli_insert_id($connection);
 }
 
-function remove_lezione(int $id_lezione) {
+function mark_lezione_as_eliminata(int $id_lezione) {
     global $connection;
 
     mysqli_query(
         $connection,
-        "DELETE FROM argomento_svolto
-        WHERE id_lezione=$id_lezione"
-    );
-
-    mysqli_query(
-        $connection,
-        "DELETE FROM presenze
-        WHERE id_lezione=$id_lezione"
-    );
-
-    mysqli_query(
-        $connection,
-        "DELETE FROM lezione
+        "UPDATE lezione
+        SET eliminata=TRUE
         WHERE id=$id_lezione"
     );
 }
@@ -333,6 +322,7 @@ function get_lezioni_filter(
     ?string $argomento = null,
     ?string $aggiunta_da = null,
     ?string $aggiunta_a = null,
+    ?bool $eliminata = null,
 ) {
     global $connection;
 
@@ -367,6 +357,12 @@ function get_lezioni_filter(
 
     if (!is_null($aggiunta_a)) {
         $query .= " AND aggiunta <= '$aggiunta_a'";
+    }
+
+    if ($eliminata === false) {
+        $query .= " AND eliminata=FALSE";
+    } else if ($eliminata === true) {
+        $query .= " AND eliminata=TRUE";
     }
 
     $query .= " ORDER BY aggiunta DESC";

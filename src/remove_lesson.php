@@ -7,6 +7,6 @@ $id_lezione = filter_var($_POST['id_lezione'], FILTER_SANITIZE_NUMBER_INT);
 print_r("DELETE FROM lezione
         WHERE id=$id_lezione");
 
-remove_lezione($id_lezione);
+mark_lezione_as_eliminata($id_lezione);
 
 go_to_view_lessons();

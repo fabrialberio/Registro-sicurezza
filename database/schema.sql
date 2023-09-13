@@ -37,7 +37,8 @@ CREATE TABLE `lezione`(
     `ora_inizio` TIME NOT NULL,
     `ora_fine` TIME NOT NULL,
     `data` DATE NOT NULL,
-    `aggiunta` DATETIME NOT NULL
+    `aggiunta` DATETIME NOT NULL,
+    `eliminata` BOOLEAN NOT NULL
 );
 CREATE TABLE `presenze`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

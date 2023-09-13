@@ -36,6 +36,7 @@ $token = decode_token_or_quit($_SESSION['token']);
         
         $lezioni = get_lezioni_filter(
           id_docente: $id_docente,
+          eliminata: FALSE,
         );
         
         foreach ($lezioni as $lezione) {
