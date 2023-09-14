@@ -37,7 +37,7 @@ $amministratore = is_amministratore_by_username($token['username']);
                     ?>
                     <i class="nav-icon fas fa-right-to-bracket float-right m-1 mr-3 ml-2"></i>
                     <?php if ($amministratore): ?>
-                        <p class="mb-0">
+                        <p class="mb-0 text-warning">
                             <small>Amministratore</small>
                         </p>
                     <?php endif; ?>
@@ -59,12 +59,6 @@ $amministratore = is_amministratore_by_username($token['username']);
                     </a>
                 </li>
                 <?php if ($amministratore): ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="view_lessons.php">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>Visualizza ore</p>
-                    </a>
-                </li>
                 <?php endif; ?>
             </ul>
         </nav>

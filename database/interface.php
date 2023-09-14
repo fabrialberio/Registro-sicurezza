@@ -112,6 +112,18 @@ function get_docente(int $id_docente): array {
     return mysqli_fetch_all($query, MYSQLI_BOTH)[0];
 }
 
+function get_docenti(): array {
+    global $connection;
+
+    $query = mysqli_query(
+        $connection,
+        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome
+        FROM docente
+        ORDER BY cognome"
+    );
+    return mysqli_fetch_all($query, MYSQLI_BOTH);
+}
+
 function get_id_docente_by_username(string $username): int | null {
     global $connection;
 

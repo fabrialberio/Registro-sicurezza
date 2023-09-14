@@ -3,12 +3,13 @@ include_once '../database/interface.php';
 
 
 
-function generate_card_lezione(int $lesson_id) {
+function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
     global $connection;
 
     $lezione = get_lezione_expanded($lesson_id);
     
     $title = $lezione['titolo'];
+    $docente = $lezione['docente'];
     $data = $lezione['data'];
     $ora = $lezione['ora'];
     $classe = $lezione['classe'];
@@ -30,22 +31,29 @@ function generate_card_lezione(int $lesson_id) {
             <div class='card-tools btn-group'>
                 <form action='../src/print_lesson.php' method='post'>
                     <input type='hidden' name='id_lezione' value='$lesson_id'>
-                    <button class='btn btn-tool btn-default mr-1' type='submit'>
+                    <button class='btn btn-sm btn-default mr-1' type='submit'>
                         <i class='fas fa-print'></i>
                         Stampa
                     </button>
-                </form>
+                </form>";
+
+    if ($amministratore) {
+        echo "
                 <form action='../src/remove_lesson.php' method='post'>
                     <input type='hidden' name='id_lezione' value='$lesson_id'>
-                    <button class='btn btn-tool btn-default' type='submit'>
+                    <button class='btn btn-sm btn-danger' type='submit'>
                         <i class='fas fa-trash'></i>
                         Elimina
                     </button>
-                </form>
+                </form>";
+    }
+    
+    echo "
             </div>
         </div>
         <div class='card-body'>
-            <dl>
+            <dl>"
+                . ($amministratore ? "<dt>Docente</dt><dd>$docente</dd>" : "") . "
                 <dt>Data</dt>
                 <dd>$data</dd>
                 <dt>Ora</dt>
@@ -82,4 +90,60 @@ function generate_table_argomenti_svolti(int $id_lezione) {
     }
 
     echo "</table>";
+}
+
+function generate_filters_bar(bool $amministratore) {
+    echo "
+    <div class='mb-2'>
+        <form action='view_lessons.php' method='get'>
+            <div class='input-group'>";
+    
+    if ($amministratore) {
+        $docenti_options = array_map(
+            function($d) {
+                return [
+                    'value' => $d['id'],
+                    'text' => $d['cognome_nome'],
+                ];
+            },
+            get_docenti()
+        );
+        generate_filter_select('id_docente', 'Tutti i docenti', $docenti_options, $_GET['id_docente'] ?? null);
+    }
+
+    $classi_options = array_map(
+        function($c) {
+            return [
+                'value' => $c['id'],
+                'text' => $c['classe'],
+            ];
+        },
+        get_classi()
+    );
+    generate_filter_select('id_classe', 'Tutte le classi', $classi_options, $_GET['id_classe'] ?? null);
+
+    echo "
+                <div class='input-group-append'>
+                    <button class='btn btn-primary' type='submit'>
+                        <i class='fas fa-filter'></i>
+                        Filtra
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>";
+}
+
+function generate_filter_select(string $name, string $default_string, array $options, string $selected = null) {
+    echo "<select class='form-control' name='$name'>
+        <option value=''>$default_string</option>";
+
+    foreach ($options as $option) {
+        $value = $option['value'];
+        $text = $option['text'];
+        $selected_attr = $selected == $value ? 'selected' : '';
+        echo "<option value='$value' $selected_attr>$text</option>";
+    }
+
+    echo "</select>";
 }
