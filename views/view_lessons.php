@@ -6,6 +6,7 @@ include_once '../views/view_lesson_widgets.php';
 
 session_start();
 $token = decode_token_or_quit($_SESSION['token']);
+$amministratore = is_amministratore_by_username($token['username']);
 ?>
 
 <!DOCTYPE html>
@@ -30,17 +31,36 @@ $token = decode_token_or_quit($_SESSION['token']);
       <h1 class="ml-2">Lezioni</h1>
     </div>
     
+    
+    
     <section class="content pb-5">
       <?php
-        $id_docente = get_id_docente_by_username($token['username']);
-        
+        $id_docente_get = strlen($_GET['id_docente']) ? intval($_GET['id_docente']) : null;
+        $id_classe_get = strlen($_GET['id_classe']) ? intval($_GET['id_classe']) : null;
+
+        $id_docente = $amministratore ? $id_docente_get : get_id_docente_by_username($token['username']);
+        $id_classe = $id_classe_get;
+
         $lezioni = get_lezioni_filter(
           id_docente: $id_docente,
+          id_classe: $id_classe,
           eliminata: FALSE,
         );
         
-        foreach ($lezioni as $lezione) {
-          generate_card_lezione($lezione['id']);
+        generate_filters_bar($amministratore);
+
+        if (count($lezioni) == 0) {
+          echo "
+          <div class='alert alert-info'>
+            <h5><i class='icon fas fa-info'></i>Nessuna lezione trovata</h5>
+            <p>
+              Non ci sono lezioni da visualizzare con i filtri selezionati.
+            </p>
+          </div>";
+        } else {
+          foreach ($lezioni as $lezione) {
+            generate_card_lezione($lezione['id'], $amministratore);
+          }
         }
       ?>
     </section>
