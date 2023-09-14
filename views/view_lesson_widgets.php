@@ -30,14 +30,16 @@ function generate_card_lezione(int $lesson_id) {
             <div class='card-tools btn-group'>
                 <form action='../src/print_lesson.php' method='post'>
                     <input type='hidden' name='id_lezione' value='$lesson_id'>
-                    <button class='btn btn-tool' type='submit'>
+                    <button class='btn btn-tool btn-default mr-1' type='submit'>
                         <i class='fas fa-print'></i>
+                        Stampa
                     </button>
                 </form>
                 <form action='../src/remove_lesson.php' method='post'>
                     <input type='hidden' name='id_lezione' value='$lesson_id'>
-                    <button class='btn btn-tool' type='submit'>
+                    <button class='btn btn-tool btn-default' type='submit'>
                         <i class='fas fa-trash'></i>
+                        Elimina
                     </button>
                 </form>
             </div>
