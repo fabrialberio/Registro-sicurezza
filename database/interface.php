@@ -75,6 +75,18 @@ function get_argomento(int $id_argomento): array {
     return mysqli_fetch_all($query, MYSQLI_BOTH)[0];
 }
 
+function get_studente(int $id_studente): array {
+    global $connection;
+
+    $query = mysqli_query(
+        $connection,
+        "SELECT id, CONCAT(cognome, ' ', nome)
+        FROM studente
+        WHERE id=" . $id_studente
+    );
+    return mysqli_fetch_all($query, MYSQLI_BOTH)[0];
+}
+
 function get_studenti_by_classe(int $id_classe): array {
     global $connection;
 
@@ -86,18 +98,6 @@ function get_studenti_by_classe(int $id_classe): array {
         ORDER BY cognome"
     );
     return mysqli_fetch_all($query, MYSQLI_BOTH);
-}
-
-function get_studente(int $id_studente): array {
-    global $connection;
-
-    $query = mysqli_query(
-        $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome)
-        FROM studente
-        WHERE id=" . $id_studente
-    );
-    return mysqli_fetch_all($query, MYSQLI_BOTH)[0];
 }
 
 function get_docente(int $id_docente): array {
@@ -315,13 +315,13 @@ function add_presenza(
     return mysqli_insert_id($connection);
 }
 
-function mark_lezione_as_eliminata(int $id_lezione) {
+function set_lezione_eliminata(int $id_lezione, bool $eliminata = TRUE) {
     global $connection;
 
     mysqli_query(
         $connection,
         "UPDATE lezione
-        SET eliminata=TRUE
+        SET eliminata=$eliminata
         WHERE id=$id_lezione"
     );
 }
