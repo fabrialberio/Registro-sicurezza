@@ -51,7 +51,7 @@ function decode_token(string $jwt): array {
 function decode_token_or_quit(string|null $jwt): array|bool {
     if (is_null($jwt)) {
         // Token nullo
-        go_to_login('Sessione scaduta');
+        go_to_login();
         return false;
     }
 
@@ -59,12 +59,12 @@ function decode_token_or_quit(string|null $jwt): array|bool {
         $token = decode_token($jwt);
     } catch (Exception $e) {
         // Errore di decodifica (token invalido)
-        go_to_login('Sessione scaduta');
+        go_to_login();
     }
 
     if ($token['exp'] < time()) {
         // Token scaduto
-        go_to_login('Sessione scaduta');
+        go_to_login();
     }
 
     return $token;

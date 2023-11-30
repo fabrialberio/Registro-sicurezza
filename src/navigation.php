@@ -7,7 +7,7 @@ if (isset($_GET['action'])) {
     }
 }
 
-function go_to_login(?string $error = null) {
+function go_to_login(?string $error = 'Sessione scaduta') {
     $location = '../index.php';
 
     if (!is_null($error)) {
