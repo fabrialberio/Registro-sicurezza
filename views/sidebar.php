@@ -59,6 +59,19 @@ $amministratore = is_amministratore_by_username($token['username']);
                     </a>
                 </li>
                 <?php if ($amministratore): ?>
+                <!-- Cambiare icone -->
+                <li class="nav-item">
+                    <a class="nav-link" href="view_docenti.php">
+                        <i class="nav-icon fas fa-eye"></i>
+                        <p>Docenti</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="view_studenti.php">
+                        <i class="nav-icon fas fa-eye"></i>
+                        <p>Studenti</p>
+                    </a>
+                </li>
                 <?php endif; ?>
             </ul>
         </nav>
