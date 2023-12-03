@@ -61,13 +61,13 @@ $amministratore = is_amministratore_by_username($token['username']);
                 <?php if ($amministratore): ?>
                 <!-- Cambiare icone -->
                 <li class="nav-item">
-                    <a class="nav-link" href="view_docenti.php">
+                    <a class="nav-link" href="docenti.php">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>Docenti</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view_studenti.php">
+                    <a class="nav-link" href="studenti.php">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>Studenti</p>
                     </a>

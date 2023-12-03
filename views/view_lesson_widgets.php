@@ -86,7 +86,7 @@ function generate_table_argomenti_svolti(int $id_lezione) {
 
     foreach($argomenti_svolti as $a) {
         $titolo = $a['argomento'];
-        echo "<tr><td>$titolo</tr></td>";
+        echo "<tr><td>$titolo</td></tr>";
     }
 
     echo "</table>";

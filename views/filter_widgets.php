@@ -1,9 +1,9 @@
 <?php
-function generate_before_filters_bar() {
+function generate_before_filters_bar(string $destination) {
     echo "
-    <div class='mb-2'>
-        <form action='view_lessons.php' method='get'>
-            <div class='input-group'>";
+<div class='mb-2'>
+    <form action='$destination' method='get'>
+        <div class='input-group'>";
 }
 
 function generate_filter_select(string $name, string $default_string, array $options, string $selected = null) {
@@ -22,13 +22,13 @@ function generate_filter_select(string $name, string $default_string, array $opt
 
 function generate_after_filters_bar() {
     echo "
-                <div class='input-group-append'>
-                    <button class='btn btn-primary' type='submit'>
-                        <i class='fas fa-filter'></i>
-                        Filtra
-                    </button>
-                </div>
+            <div class='input-group-append'>
+                <button class='btn btn-primary' type='submit'>
+                    <i class='fas fa-filter'></i>
+                    Filtra
+                </button>
             </div>
-        </form>
-    </div>";
+        </div>
+    </form>
+</div>";
 }
