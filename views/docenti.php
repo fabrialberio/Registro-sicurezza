@@ -16,7 +16,7 @@ generate_before_content('Docenti', $token);
 
 <section class="content">
   <div class="container-fluid">
-    <div class="card mt-4 mb-4" style="max-widht: 720px; margin: auto">
+    <div class='card mt-4' style='max-width: 720px; margin: auto'>
       <div class="card-header">
         <button class="btn btn-primary" onclick="window.location.href='add_docente.php'">
           <i class="fas fa-plus"></i>
@@ -27,14 +27,12 @@ generate_before_content('Docenti', $token);
         <?php
             $docenti = get_docenti();
 
-            echo "<table class='table table-sm'>";
+            echo "<table class='table table-sm table-bordered'>";
             
             foreach ($docenti as $d) {
                 $cognome_nome = $d['cognome_nome'];
         
-                echo "<tr>
-                    <td>$cognome_nome</td>
-                <tr>";
+                echo "<tr><td>$cognome_nome</td><tr>";
             }
 
             echo "</table>";

@@ -62,13 +62,13 @@ $amministratore = is_amministratore_by_username($token['username']);
                 <!-- Cambiare icone -->
                 <li class="nav-item">
                     <a class="nav-link" href="docenti.php">
-                        <i class="nav-icon fas fa-eye"></i>
+                        <i class="nav-icon fas fa-chalkboard-user"></i>
                         <p>Docenti</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="studenti.php">
-                        <i class="nav-icon fas fa-eye"></i>
+                        <i class="nav-icon fas fa-user-group"></i>
                         <p>Studenti</p>
                     </a>
                 </li>

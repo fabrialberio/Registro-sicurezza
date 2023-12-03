@@ -16,6 +16,39 @@ if (!is_amministratore_by_username($token['username'])) {
 generate_before_content('Aggiungi docente', $token);
 ?>
 
+<section class="content">
+  <div class="container-fluid">
+    <div class='card mt-4' style='max-width: 720px; margin: auto'>
+      <form action="../src/add_docente.php" method="post">
+        <div class="card-header">
+          <h4 class="card-title">Dati docente</h4>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Nome</label>
+            <input type="text" class="form-control" name="nome" placeholder="Nome" required>
+          </div>
+          <div class="form-group">
+            <label>Cognome</label>
+            <input type="text" class="form-control" name="cognome" placeholder="Cognome" required>
+          </div>
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username" placeholder="Username" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="text" class="form-control" name="password" placeholder="Password" required>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary float-right">Aggiungi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
 
 
 <?php
