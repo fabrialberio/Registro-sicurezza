@@ -9,7 +9,7 @@ session_start();
 $token = decode_token_or_quit($_SESSION['token']);
 
 
-$lezione = get_lezione_expanded($_POST['id_lezione']);
+$lezione = get_lezione_expanded(filter_var($_POST['id_lezione'], FILTER_SANITIZE_NUMBER_INT));
 
 $pdf = new \tFPDF();
 $pdf->AddPage();
@@ -61,4 +61,6 @@ $pdf->Ln(8);
 $pdf->SetFont('Arial', '', 12);
 $pdf->Cell(0, 10, 'Firma del docente: ___________________________', 0, 1, 'R');
 
-$pdf->Output($lezione['titolo'] . '.pdf', 'I');
+// Trascrive i caratteri accentati (ì, à, ...) in caratteri ASCII (i, a, ...)
+$filename = iconv('UTF-8', 'ascii//TRANSLIT', $lezione['titolo']);
+$pdf->Output($filename . '.pdf', 'I');

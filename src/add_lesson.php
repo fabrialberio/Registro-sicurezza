@@ -11,10 +11,10 @@ $token = decode_token_or_quit($_SESSION['token']);
 // Inserisce la lezione nel database
 $id_docente = get_id_docente_by_username($token['username']);
 
-$id_classe = $_POST['classe'];
-$ora_inizio = $_POST['ora_inizio'];
-$ora_fine = $_POST['ora_fine'];
-$data = $_POST['data'];
+$id_classe = filter_var($_POST['classe'], FILTER_SANITIZE_NUMBER_INT);
+$ora_inizio = mysqli_real_escape_string($connection, $_POST['ora_inizio']);
+$ora_fine = mysqli_real_escape_string($connection, $_POST['ora_fine']);
+$data = mysqli_real_escape_string($connection, $_POST['data']);
 
 $id_lezione = add_lezione($id_docente, $id_classe, $ora_inizio, $ora_fine, $data);
 
@@ -31,7 +31,7 @@ foreach ($argomenti as $argomento) {
 // Inserisce le presenze nel database
 $studenti = get_studenti_by_classe($_POST['classe']);
 foreach ($studenti as $studente) {
-    $id_studente = $studente[0];
+    $id_studente = filter_var($studente[0], FILTER_SANITIZE_NUMBER_INT);
 
     if (isset($_POST['presenze'])) {
         $presente = in_array($id_studente, $_POST['presenze']) ? 1 : 0;
