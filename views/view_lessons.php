@@ -33,22 +33,22 @@ generate_before_content('Lezioni', $token);
     generate_before_filters_bar('view_lessons.php');
 
     if ($amministratore) {
-        $docenti_options = array_map(
-            function($d) {
-                return [
-                    0 => $d['id'],
-                    1 => $d['cognome_nome'],
-                ];
-            },
-            get_docenti()
-        );
-        generate_filter_select('id_docente', 'Tutti i docenti', $docenti_options, $_GET['id_docente'] ?? null);
+      $eliminata_options = [
+        0 => [TRUE, 'Eliminate'],
+      ];
+      generate_filter_select('eliminate', 'Non eliminate', $eliminata_options, $_GET['eliminate'] ?? null);
 
-        $eliminata_options = [
-          0 => [TRUE, 'Eliminate'],
-        ];
-        generate_filter_select('eliminate', 'Non eliminate', $eliminata_options, $_GET['eliminate'] ?? null);
-      }
+      $docenti_options = array_map(
+          function($d) {
+              return [
+                  0 => $d['id'],
+                  1 => $d['cognome_nome'],
+              ];
+          },
+          get_docenti()
+      );
+      generate_filter_select('id_docente', 'Tutti i docenti', $docenti_options, $_GET['id_docente'] ?? null);
+    }
 
     $classi_options = array_map(
         function($c) {
