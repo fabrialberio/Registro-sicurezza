@@ -180,6 +180,7 @@ function get_lezione_expanded(int $id_lezione): array {
         'classe' => $classe,
         'ora' => $lezione['ora_inizio'] . ' - ' . $lezione['ora_fine'],
         'docente' => get_docente($lezione['id_docente'])[1],
+        'eliminata' => $lezione['eliminata'],
     ];
 }
 
@@ -317,6 +318,8 @@ function add_presenza(
 
 function set_lezione_eliminata(int $id_lezione, bool $eliminata = TRUE) {
     global $connection;
+    
+    $eliminata = $eliminata ? 1 : 0;
 
     mysqli_query(
         $connection,

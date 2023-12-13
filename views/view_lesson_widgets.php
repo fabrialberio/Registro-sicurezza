@@ -38,14 +38,26 @@ function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
                 </form>";
 
     if ($amministratore) {
-        echo "
-                <form action='../src/remove_lesson.php' method='post'>
-                    <input type='hidden' name='id_lezione' value='$lesson_id'>
-                    <button class='btn btn-sm btn-danger' type='submit'>
-                        <i class='fas fa-trash'></i>
-                        Elimina
-                    </button>
-                </form>";
+        if (!$lezione['eliminata']) {
+            echo "
+                    <form action='../src/remove_lesson.php' method='post'>
+                        <input type='hidden' name='id_lezione' value='$lesson_id'>
+                        <button class='btn btn-sm btn-danger' type='submit'>
+                            <i class='fas fa-trash'></i>
+                            Elimina
+                        </button>
+                    </form>";
+        } else {
+            echo "
+                    <form action='../src/remove_lesson.php' method='post'>
+                        <input type='hidden' name='id_lezione' value='$lesson_id'>
+                        <input type='hidden' name='restore' value='1'>
+                        <button class='btn btn-sm btn-default' type='submit'>
+                            <i class='fas fa-arrow-rotate-left'></i>
+                            Ripristina
+                        </button>
+                    </form>";
+        }
     }
 
     echo "
