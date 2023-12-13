@@ -26,3 +26,11 @@ function go_to_home_page() {
 function go_to_view_lessons() {
     header('Location: ../views/view_lessons.php');
 }
+
+function go_to_docenti() {
+    header('Location: ../views/docenti.php');
+}
+
+function go_to_studenti() {
+    header('Location: ../views/studenti.php');
+}

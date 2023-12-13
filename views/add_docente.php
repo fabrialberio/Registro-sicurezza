@@ -19,11 +19,12 @@ generate_before_content('Aggiungi docente', $token);
 <section class="content">
   <div class="container-fluid">
     <div class='card mt-4' style='max-width: 720px; margin: auto'>
-      <form action="../src/add_docente.php" method="post">
+      <form action="../src/edit_docente.php" method="post">
         <div class="card-header">
           <h4 class="card-title">Dati docente</h4>
         </div>
         <div class="card-body">
+          <input type="hidden" name="mode" value="add">
           <div class="form-group">
             <label>Nome</label>
             <input type="text" class="form-control" name="nome" placeholder="Nome" required>

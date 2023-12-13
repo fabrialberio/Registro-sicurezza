@@ -100,6 +100,22 @@ function get_studenti_by_classe(int $id_classe): array {
     return mysqli_fetch_all($query, MYSQLI_BOTH);
 }
 
+function add_studente(
+    string $nome,
+    string $cognome,
+    int $id_classe
+): int {
+    global $connection;
+
+    mysqli_query(
+        $connection,
+        "INSERT INTO studente(nome, cognome, id_classe) VALUES
+        ('$nome', '$cognome', $id_classe)"
+    );
+
+    return mysqli_insert_id($connection);
+}
+
 function get_docente(int $id_docente): array {
     global $connection;
 
@@ -134,6 +150,23 @@ function get_id_docente_by_username(string $username): int | null {
         WHERE username='$username'"
     );
     return mysqli_fetch_array($query)['id'];
+}
+
+function add_docente(
+    string $nome,
+    string $cognome,
+    string $username,
+    string $password_hash
+): int {
+    global $connection;
+
+    mysqli_query(
+        $connection,
+        "INSERT INTO docente(nome, cognome, username, password) VALUES
+        ('$nome', '$cognome', '$username', '$password_hash')"
+    );
+
+    return mysqli_insert_id($connection);
 }
 
 function get_lezione(int $id_lezione): array {
