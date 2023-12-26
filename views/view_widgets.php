@@ -23,7 +23,7 @@ function generate_before_content(string $page_title, $token) {
     include 'sidebar.php';
 
     echo "
-        <div class='content-wrapper'>
+        <div class='content-wrapper pb-4'>
             <div class='content-header'>
                 <h1 class='ml-2'>$page_title</h1>
             </div>";
