@@ -206,7 +206,7 @@ function get_docente(int $id_docente): array {
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, username, password
+        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, username, password, cognome, nome
         FROM docente
         WHERE id=" . $id_docente
     );
@@ -218,7 +218,7 @@ function get_docenti(): array {
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome
+        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, username, password, cognome, nome
         FROM docente
         ORDER BY cognome"
     );
