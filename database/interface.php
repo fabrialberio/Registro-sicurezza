@@ -99,9 +99,49 @@ function get_studenti(): array {
         $connection,
         "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, id_classe
         FROM studente
-        ORDER BY cognome"
+        ORDER BY id_classe, cognome"
     );
     return mysqli_fetch_all($query, MYSQLI_BOTH);
+}
+
+function get_studente_expanded(int $id_studente): array {
+    global $connection;
+
+    $studente = get_studente($id_studente);
+    $classe = get_classe($studente['id_classe'])[1];
+
+    # Trova le lezioni in cui lo studente era presente
+    $query = mysqli_query(
+        $connection,
+        "SELECT DISTINCT lezione.id, lezione.data
+        FROM lezione
+        LEFT JOIN presenze ON lezione.id = presenze.id_lezione
+        WHERE presenze.id_studente = $id_studente AND presenze.presente = TRUE
+        ORDER BY data DESC"
+    );
+
+    $lezioni = array_map(
+        function ($l) { return get_lezione($l[0]); },
+        mysqli_fetch_all($query, MYSQLI_BOTH)
+    );
+
+    # Calcola il numero di ore di lezione
+    $sec = array_sum(
+        array_map(
+            function ($l) {
+                return strtotime($l['ora_fine']) - strtotime($l['ora_inizio']);
+            },
+            $lezioni
+        )
+    );
+
+    return [
+        'id' => $studente['id'],
+        'cognome_nome' => $studente['cognome_nome'],
+        'classe' => $classe,
+        'lezioni' => $lezioni,
+        'ore' => $sec / 3600,
+    ];
 }
 
 function get_studenti_by_classe(int $id_classe): array {

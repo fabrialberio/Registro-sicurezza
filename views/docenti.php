@@ -3,6 +3,7 @@ include_once '../database/interface.php';
 include_once '../src/token.php';
 include_once '../src/navigation.php';
 include_once '../views/view_widgets.php';
+include_once '../views/list_widgets.php';
 
 session_start();
 $token = decode_token_or_quit($_SESSION['token']);
@@ -26,16 +27,16 @@ generate_before_content('Docenti', $token);
       <div class="card-body">
         <?php
             $docenti = get_docenti();
-
-            echo "<table class='table table-sm table-bordered'>";
             
-            foreach ($docenti as $d) {
-                $cognome_nome = $d['cognome_nome'];
-        
-                echo "<tr><td>$cognome_nome</td><tr>";
-            }
+            $docenti = array_map(function ($d) {
+              return [$d[1]];
+            }, $docenti);
 
-            echo "</table>";
+            generate_table(
+                ['Cognome e nome'],
+                $docenti,
+                'add_docente.php'
+            );
         ?>
       </div>
     </div>
