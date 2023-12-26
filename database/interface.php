@@ -26,10 +26,11 @@ if (!function_exists('mysqli_fetch_all')) {
     }
 }
 
-
+// Classi
+// -----------------------------------------------------------------------------
 function get_classi(): array {
     global $connection;
-
+    
     $query = mysqli_query(
         $connection,
         "SELECT id, CONCAT(anno, sezione) AS classe 
@@ -41,7 +42,7 @@ function get_classi(): array {
 
 function get_classe(int $id_classe): array {
     global $connection;
-
+    
     $query = mysqli_query(
         $connection,
         "SELECT id, CONCAT(anno, sezione) 
@@ -51,9 +52,11 @@ function get_classe(int $id_classe): array {
     return mysqli_fetch_all($query, MYSQLI_BOTH)[0];
 }
 
+// Argomenti
+// -----------------------------------------------------------------------------
 function get_argomenti(): array {
     global $connection;
-
+    
     $query = mysqli_query(
         $connection,
         "SELECT id, titolo
@@ -65,7 +68,7 @@ function get_argomenti(): array {
 
 function get_argomento(int $id_argomento): array {
     global $connection;
-
+    
     $query = mysqli_query(
         $connection,
         "SELECT id, titolo
@@ -75,16 +78,30 @@ function get_argomento(int $id_argomento): array {
     return mysqli_fetch_all($query, MYSQLI_BOTH)[0];
 }
 
+// Studenti
+// -----------------------------------------------------------------------------
 function get_studente(int $id_studente): array {
     global $connection;
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome)
+        "SELECT id, CONCAT(cognome, ' ', nome) as cognome_nome, id_classe
         FROM studente
         WHERE id=" . $id_studente
     );
     return mysqli_fetch_all($query, MYSQLI_BOTH)[0];
+}
+
+function get_studenti(): array {
+    global $connection;
+
+    $query = mysqli_query(
+        $connection,
+        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, id_classe
+        FROM studente
+        ORDER BY cognome"
+    );
+    return mysqli_fetch_all($query, MYSQLI_BOTH);
 }
 
 function get_studenti_by_classe(int $id_classe): array {
@@ -92,7 +109,7 @@ function get_studenti_by_classe(int $id_classe): array {
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome) AS nome_cognome
+        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome
         FROM studente
         WHERE id_classe=" . $id_classe . "
         ORDER BY cognome"
@@ -116,6 +133,34 @@ function add_studente(
     return mysqli_insert_id($connection);
 }
 
+function edit_studente(
+    int $id_studente,
+    string $nome,
+    string $cognome,
+    int $id_classe
+) {
+    global $connection;
+
+    mysqli_query(
+        $connection,
+        "UPDATE studente
+        SET nome='$nome', cognome='$cognome', id_classe=$id_classe
+        WHERE id=$id_studente"
+    );
+}
+
+function delete_studente(int $id_studente) {
+    global $connection;
+
+    mysqli_query(
+        $connection,
+        "DELETE FROM studente
+        WHERE id=$id_studente"
+    );
+}
+
+// Docenti
+// -----------------------------------------------------------------------------
 function get_docente(int $id_docente): array {
     global $connection;
 
@@ -169,6 +214,35 @@ function add_docente(
     return mysqli_insert_id($connection);
 }
 
+function edit_docente(
+    int $id_docente,
+    string $nome,
+    string $cognome,
+    string $username,
+    string $password_hash
+) {
+    global $connection;
+
+    mysqli_query(
+        $connection,
+        "UPDATE docente
+        SET nome='$nome', cognome='$cognome', username='$username', password='$password_hash'
+        WHERE id=$id_docente"
+    );
+}
+
+function delete_docente(int $id_docente) {
+    global $connection;
+
+    mysqli_query(
+        $connection,
+        "DELETE FROM docente
+        WHERE id=$id_docente"
+    );
+}
+
+// Lezioni
+// -----------------------------------------------------------------------------
 function get_lezione(int $id_lezione): array {
     global $connection;
 
@@ -217,82 +291,6 @@ function get_lezione_expanded(int $id_lezione): array {
     ];
 }
 
-function get_presenze(int $id_lezione): array {
-    global $connection;
-
-    $query = mysqli_query(
-        $connection,
-        "SELECT id, id_studente, presente
-        FROM presenze
-        WHERE id_lezione=$id_lezione"
-    );
-
-    return mysqli_fetch_all($query, MYSQLI_BOTH);
-}
-
-function get_presenze_expanded(int $id_lezione): array {
-    global $connection;
-
-    $presenze = get_presenze($id_lezione);
-    $presenze_expanded = [];
-
-    foreach($presenze as $p) {
-        $presenze_expanded[] = [
-            'id' => $p[0],
-            'studente' => get_studente($p[1])[1],
-            'presente' => $p[2],
-        ];
-    }
-
-    return $presenze_expanded;
-}
-
-function get_permessi(int $id_docente): array | null {
-    global $connection;
-
-    $query = mysqli_query(
-        $connection,
-        "SELECT id, id_docente, amministratore
-        FROM permessi
-        WHERE id_docente=$id_docente"
-    );
-
-    return mysqli_fetch_array($query, MYSQLI_BOTH);
-}
-
-function is_amministratore(int $id_docente): bool {
-    $permessi = get_permessi($id_docente);
-
-    if (is_null($permessi)) {
-        return false;
-    }
-
-    return $permessi['amministratore'];
-}
-
-function is_amministratore_by_username(string $username): bool {
-    $id_docente = get_id_docente_by_username($username);
-
-    if (is_null($id_docente)) {
-        return false;
-    }
-
-    return is_amministratore($id_docente);
-}
-
-function get_argomenti_svolti(int $id_lezione): array {
-    global $connection;
-
-    $query = mysqli_query(
-        $connection,
-        "SELECT id, id_lezione, argomento
-        FROM argomento_svolto
-        WHERE id_lezione=$id_lezione"
-    );
-
-    return mysqli_fetch_all($query, MYSQLI_BOTH);
-}
-
 function add_lezione(
     int $id_docente,
     int $id_classe,
@@ -308,42 +306,6 @@ function add_lezione(
         $connection,
         "INSERT INTO lezione(id_docente, id_classe, ora_inizio, ora_fine, data, aggiunta, eliminata) VALUES
         ($id_docente, $id_classe, '$ora_inizio', '$ora_fine', '$data', '$aggiunta', FALSE)"
-    );
-
-    return mysqli_insert_id($connection);
-}
-
-function add_argomento_svolto(
-    int $id_lezione,
-    string $argomento
-): int {
-    global $connection;
-
-    mysqli_query(
-        $connection,
-        "INSERT INTO argomento_svolto(id_lezione, argomento) VALUES
-        ($id_lezione, '$argomento')"
-    );
-
-    return mysqli_insert_id($connection);
-}
-
-function add_presenza(
-    int $id_lezione,
-    int $id_studente,
-    bool $presente
-): int {
-    global $connection;
-
-    $presente = $presente ? 1 : 0;
-
-    print_r("INSERT INTO presenze(id_lezione, id_studente, presente) VALUES
-        ($id_lezione, $id_studente, $presente)");
-
-    mysqli_query(
-        $connection,
-        "INSERT INTO presenze(id_lezione, id_studente, presente) VALUES
-        ($id_lezione, $id_studente, $presente)"
     );
 
     return mysqli_insert_id($connection);
@@ -421,4 +383,122 @@ function get_lezioni_filter(
     );
 
     return mysqli_fetch_all($query, MYSQLI_BOTH);
+}
+
+// Presenze
+// -----------------------------------------------------------------------------
+function get_presenze(int $id_lezione): array {
+    global $connection;
+
+    $query = mysqli_query(
+        $connection,
+        "SELECT id, id_studente, presente
+        FROM presenze
+        WHERE id_lezione=$id_lezione"
+    );
+
+    return mysqli_fetch_all($query, MYSQLI_BOTH);
+}
+
+function get_presenze_expanded(int $id_lezione): array {
+    global $connection;
+
+    $presenze = get_presenze($id_lezione);
+    $presenze_expanded = [];
+
+    foreach($presenze as $p) {
+        $presenze_expanded[] = [
+            'id' => $p[0],
+            'studente' => get_studente($p[1])[1],
+            'presente' => $p[2],
+        ];
+    }
+
+    return $presenze_expanded;
+}
+
+function add_presenza(
+    int $id_lezione,
+    int $id_studente,
+    bool $presente
+): int {
+    global $connection;
+
+    $presente = $presente ? 1 : 0;
+
+    print_r("INSERT INTO presenze(id_lezione, id_studente, presente) VALUES
+        ($id_lezione, $id_studente, $presente)");
+
+    mysqli_query(
+        $connection,
+        "INSERT INTO presenze(id_lezione, id_studente, presente) VALUES
+        ($id_lezione, $id_studente, $presente)"
+    );
+
+    return mysqli_insert_id($connection);
+}
+
+// Permessi
+// -----------------------------------------------------------------------------
+function get_permessi(int $id_docente): array | null {
+    global $connection;
+
+    $query = mysqli_query(
+        $connection,
+        "SELECT id, id_docente, amministratore
+        FROM permessi
+        WHERE id_docente=$id_docente"
+    );
+
+    return mysqli_fetch_array($query, MYSQLI_BOTH);
+}
+
+function is_amministratore(int $id_docente): bool {
+    $permessi = get_permessi($id_docente);
+
+    if (is_null($permessi)) {
+        return false;
+    }
+
+    return $permessi['amministratore'];
+}
+
+function is_amministratore_by_username(string $username): bool {
+    $id_docente = get_id_docente_by_username($username);
+
+    if (is_null($id_docente)) {
+        return false;
+    }
+
+    return is_amministratore($id_docente);
+}
+
+// Argomenti svolti
+// -----------------------------------------------------------------------------
+function get_argomenti_svolti(int $id_lezione): array {
+    global $connection;
+
+    $query = mysqli_query(
+        $connection,
+        "SELECT id, id_lezione, argomento
+        FROM argomento_svolto
+        WHERE id_lezione=$id_lezione"
+    );
+
+    return mysqli_fetch_all($query, MYSQLI_BOTH);
+}
+
+function add_argomento_svolto(
+    int $id_lezione,
+    string $argomento
+): int {
+    global $connection;
+
+    mysqli_query(
+        $connection,
+        "INSERT INTO argomento_svolto(id_lezione, argomento) VALUES
+        ($id_lezione, '$argomento')"
+    );
+
+    return mysqli_insert_id($connection);
 }

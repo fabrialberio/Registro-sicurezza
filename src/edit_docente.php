@@ -10,12 +10,31 @@ $cognome = mysqli_real_escape_string($connection, $_POST['cognome']);
 $username = mysqli_real_escape_string($connection, $_POST['username']);
 $password = mysqli_real_escape_string($connection, $_POST['password']);
 
-if ($mode == 'add') {
+session_start();
+$token = decode_token_or_quit($_SESSION['token']);
+
+if (!is_amministratore_by_username($token['username'])) {
+    go_to_login();
+}
+
+
+switch ($mode) {
+case 'add':
     add_docente($nome, $cognome, $username, $password);
     go_to_docenti();
-} else if ($mode == 'edit') {
+    break;
 
-} else if ($mode == 'delete') {
+case 'edit':
+    edit_docente($id_docente, $nome, $cognome, $username, $password);
+    go_to_docenti();
+    break;
 
+case 'delete':
+    delete_docente($id_docente);
+    go_to_docenti();
+    break;
 
+default:
+    go_to_docenti();
+    break;
 }
