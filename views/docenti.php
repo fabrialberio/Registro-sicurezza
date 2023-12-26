@@ -19,7 +19,7 @@ generate_before_content('Docenti', $token);
   <div class="container-fluid">
     <div class='card mt-4' style='max-width: 720px; margin: auto'>
       <div class="card-header">
-        <button class="btn btn-primary" onclick="window.location.href='add_docente.php'">
+        <button class="btn btn-primary" onclick="window.location.href='dati_docente.php'">
           <i class="fas fa-plus"></i>
           Aggiungi docente
         </button>
@@ -27,15 +27,19 @@ generate_before_content('Docenti', $token);
       <div class="card-body">
         <?php
             $docenti = get_docenti();
+
+            $on_row_click = array_map(function ($d) {
+              return 'dati_docente.php?id=' . $d[0];
+            }, $docenti);
             
             $docenti = array_map(function ($d) {
-              return [$d[1]];
+              return [$d[1], $d[2]];
             }, $docenti);
 
             generate_table(
-                ['Cognome e nome'],
+                ['Cognome e nome', 'Username'],
                 $docenti,
-                'add_docente.php'
+                $on_row_click
             );
         ?>
       </div>

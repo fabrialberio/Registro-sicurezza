@@ -29,7 +29,6 @@ generate_before_content('Classi', $token);
             generate_table(
                 ['Anno e sezione'],
                 $classi,
-                'prompt(\'Cognome e nome\', this.innerHTML);'
             );
         ?>
       </div>

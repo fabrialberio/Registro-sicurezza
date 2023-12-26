@@ -41,7 +41,6 @@ generate_before_content('Docenti', $token);
             generate_table(
                 ['Classe', 'Cognome e nome', 'Ore di lezione'],
                 $studenti,
-                'prompt(\'Cognome e nome\', this.innerHTML);'
             );
         ?>
       </div>
