@@ -33,7 +33,7 @@ function get_classi(): array {
     
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(anno, sezione) AS classe 
+        "SELECT id, CONCAT(anno, sezione) AS classe
         FROM classe
         ORDER BY anno, sezione"
     );
@@ -45,7 +45,7 @@ function get_classe(int $id_classe): array {
     
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(anno, sezione) 
+        "SELECT id, CONCAT(anno, sezione)
         FROM classe
         WHERE id =" . strval($id_classe)
     );

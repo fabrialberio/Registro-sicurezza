@@ -29,7 +29,7 @@ $amministratore = is_amministratore_by_username($token['username']);
 
 <aside class="main-sidebar sidebar-dark-primary">
     <div class="sidebar">
-        <div class="user-panel mt-3 pb-2 mb-3">
+        <div class="user-panel mt-3 pb-2 mb-2">
             <div class="info">
                 <a href="../src/navigation.php?action=logout">
                     <?php 
@@ -46,8 +46,8 @@ $amministratore = is_amministratore_by_username($token['username']);
         </div>
         <nav>
             <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
-                <li class="nav-item">
-                    <a class="nav-link" href="home_page.php">
+                <li>
+                    <a class="nav-link btn btn-primary mb-2 text-white" href="home_page.php">
                         <i class="nav-icon fas fa-add"></i>
                         <p>Nuova lezione</p>
                     </a>
@@ -70,6 +70,12 @@ $amministratore = is_amministratore_by_username($token['username']);
                     <a class="nav-link" href="studenti.php">
                         <i class="nav-icon fas fa-user-group"></i>
                         <p>Studenti</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="classi.php">
+                        <i class="nav-icon fas fa-chalkboard"></i>
+                        <p>Classi</p>
                     </a>
                 </li>
                 <?php endif; ?>
