@@ -19,11 +19,11 @@ $amministratore = is_amministratore_by_username($token['username']);
 
 <nav class="main-header navbar navbar-expand navbar-white navbar-light show-only-on-mobile">
     <ul class="navbar-nav">
-    <li class="nav-item">
-        <a class="nav-link" onclick="showSidebar();">
-        <i class="fas fa-bars"></i>
-        </a>
-    </li>
+        <li class="nav-item">
+            <a class="nav-link" onclick="showSidebar();">
+                <i class="fas fa-bars"></i>
+            </a>
+        </li>
     </ul>
 </nav>
 
@@ -59,7 +59,6 @@ $amministratore = is_amministratore_by_username($token['username']);
                     </a>
                 </li>
                 <?php if ($amministratore): ?>
-                <!-- Cambiare icone -->
                 <li class="nav-item">
                     <a class="nav-link" href="docenti.php">
                         <i class="nav-icon fas fa-chalkboard-user"></i>

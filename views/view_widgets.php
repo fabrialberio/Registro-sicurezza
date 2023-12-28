@@ -19,18 +19,22 @@ function generate_before_content(string $page_title, $token) {
 
 <body style='height: auto;' class='sidebar-mini layout-fixed'>
     <div class='wrapper'>";
-    
-    include 'sidebar.php';
 
-    echo "
+include 'sidebar.php';
+
+echo "
         <div class='content-wrapper pb-4'>
-            <div class='content-header'>
-                <h1 class='ml-2'>$page_title</h1>
-            </div>";
+            <div style='max-width: 720px; margin: auto'>
+                <div class='content-header mb-2'>
+                    <h1>$page_title</h1>
+                </div>
+                <section class='content ml-2 mr-2'>";
 }
 
 function generate_after_content() {
     echo "
+                </section>
+            </div>
         </div>
     </div>
 

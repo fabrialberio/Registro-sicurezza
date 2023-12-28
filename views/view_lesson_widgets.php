@@ -25,7 +25,7 @@ function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
     )));
 
     echo "
-    <div class='card mt-4' style='max-width: 720px; margin: auto'>
+    <div class='card mb-2'>
         <div class='card-header'>
             <h4 class='card-title'>$title</h4>
             <div class='card-tools btn-group'>

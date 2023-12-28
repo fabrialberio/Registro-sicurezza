@@ -1,7 +1,7 @@
 <?php
 function generate_before_filters_bar(string $destination) {
     echo "
-<div class='mb-2'>
+<div class='mb-4'>
     <form action='$destination' method='get'>
         <div class='input-group'>";
 }

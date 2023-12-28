@@ -15,38 +15,34 @@ if (!is_amministratore_by_username($token['username'])) {
 generate_before_content('Docenti', $token);
 ?>
 
-<section class="content">
-  <div class="container-fluid">
-    <div class='card mt-4' style='max-width: 720px; margin: auto'>
-      <div class="card-header">
-        <button class="btn btn-primary" onclick="window.location.href='add_studente.php'">
-          <i class="fas fa-plus"></i>
-          Aggiungi studente
-        </button>
-      </div>
-      <div class="card-body">
-        <?php
-            $studenti = get_studenti();
-
-            $studenti = array_map(function ($s) {
-                $studente_expanded = get_studente_expanded($s[0]);
-
-                return [
-                    $studente_expanded['classe'],
-                    $studente_expanded['cognome_nome'],
-                    $studente_expanded['ore']
-                ];
-            }, $studenti);
-
-            generate_table(
-                ['Classe', 'Cognome e nome', 'Ore di lezione'],
-                $studenti,
-            );
-        ?>
-      </div>
-    </div>
+<div class='card'>
+  <div class="card-header">
+    <button class="btn btn-primary" onclick="window.location.href='add_studente.php'">
+      <i class="fas fa-plus"></i>
+      Aggiungi studente
+    </button>
   </div>
-</section>
+  <div class="card-body">
+    <?php
+        $studenti = get_studenti();
+
+        $studenti = array_map(function ($s) {
+            $studente_expanded = get_studente_expanded($s[0]);
+
+            return [
+                $studente_expanded['classe'],
+                $studente_expanded['cognome_nome'],
+                $studente_expanded['ore']
+            ];
+        }, $studenti);
+
+        generate_table(
+            ['Classe', 'Cognome e nome', 'Ore di lezione'],
+            $studenti,
+        );
+    ?>
+  </div>
+</div>
 
 <?php
 generate_after_content();

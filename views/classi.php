@@ -15,26 +15,22 @@ if (!is_amministratore_by_username($token['username'])) {
 generate_before_content('Classi', $token);
 ?>
 
-<section class="content">
-  <div class="container-fluid">
-    <div class='card mt-4' style='max-width: 720px; margin: auto'>
-      <div class="card-body">
-        <?php
-            $classi = get_classi();
+<div class='card'>
+  <div class="card-body">
+    <?php
+        $classi = get_classi();
 
-            $classi = array_map(function ($c) {
-                return [$c[1]];
-            }, $classi);
+        $classi = array_map(function ($c) {
+            return [$c[1]];
+        }, $classi);
 
-            generate_table(
-                ['Anno e sezione'],
-                $classi,
-            );
-        ?>
-      </div>
-    </div>
+        generate_table(
+            ['Anno e sezione'],
+            $classi,
+        );
+    ?>
   </div>
-</section>
+</div>
 
 <?php
 generate_after_content();
