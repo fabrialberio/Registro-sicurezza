@@ -3,7 +3,7 @@ include_once '../database/interface.php';
 include_once '../src/token.php';
 include_once '../src/navigation.php';
 include_once '../views/view_widgets.php';
-include_once '../views/list_widgets.php';
+include_once '../views/dati_widgets.php';
 
 session_start();
 $token = decode_token_or_quit($_SESSION['token']);
