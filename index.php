@@ -1,5 +1,5 @@
 <?php
-include_once 'src/common.php';
+include_once 'src/navigation.php';
 
 if (isset($_SESSION['token'])) {
   go_to_home_page();
@@ -42,11 +42,8 @@ session_start();
           <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
       </div>
-      <!-- /.card-body -->
     </div>
-    <!-- /.card -->
   </div>
-  <!-- /.login-box -->
 </body>
 
 </html>

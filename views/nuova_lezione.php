@@ -2,7 +2,7 @@
 include_once '../database/interface.php';
 include_once '../src/token.php';
 include_once '../src/navigation.php';
-include_once '../views/new_lesson_widgets.php';
+include_once '../views/nuova_lezione_widgets.php';
 include_once '../views/view_widgets.php';
 
 session_start();
@@ -12,7 +12,7 @@ generate_before_content('Nuova lezione', $token);
 ?>
 
 <div class="card">
-  <form action="new_lesson.php" method="post">
+  <form action="nuova_lezione_presenze.php" method="post">
     <div class="card-header">
       <h4 class="card-title">Dati lezione</h4>
     </div>

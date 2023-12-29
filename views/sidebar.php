@@ -47,13 +47,13 @@ $amministratore = is_amministratore_by_username($token['username']);
         <nav>
             <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
                 <li>
-                    <a class="nav-link btn btn-primary mb-2 text-white" href="home_page.php">
+                    <a class="nav-link btn btn-primary mb-2 text-white" href="nuova_lezione.php">
                         <i class="nav-icon fas fa-add"></i>
                         <p>Nuova lezione</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view_lessons.php">
+                    <a class="nav-link" href="lezioni.php">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>Visualizza lezioni</p>
                     </a>

@@ -20,11 +20,11 @@ function go_to_login(?string $error = 'Sessione scaduta') {
 }
 
 function go_to_home_page() {
-    header('Location: ../views/home_page.php');
+    header('Location: ../views/nuova_lezione.php');
 }
 
-function go_to_view_lessons() {
-    header('Location: ../views/view_lessons.php');
+function go_to_lezioni() {
+    header('Location: ../views/lezioni.php');
 }
 
 function go_to_docenti() {

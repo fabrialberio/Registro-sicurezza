@@ -2,7 +2,7 @@
 include_once '../database/interface.php';
 include_once '../src/token.php';
 include_once '../src/navigation.php';
-include_once '../views/new_lesson_widgets.php';
+include_once '../views/nuova_lezione_widgets.php';
 include_once '../views/view_widgets.php';
 
 session_start();
@@ -25,7 +25,7 @@ generate_before_content('Nuova lezione', $token);
 </script>
 
 <div class="card">
-  <form action="../src/add_lesson.php" method="post">
+  <form action="../src/add_lezione.php" method="post">
     <div class="card-header">
       <h4 class="card-title">Dati lezione</h4>
     </div>
@@ -61,7 +61,7 @@ generate_before_content('Nuova lezione', $token);
 
     <div class="card-footer">
       <button type="submit" class="btn btn-primary float-right">Aggiungi lezione</button>
-      <a href='home_page.php' class="btn btn-default">Annulla</a>
+      <a href='nuova_lezione.php' class="btn btn-default">Annulla</a>
     </div>
   </form>
 </div>

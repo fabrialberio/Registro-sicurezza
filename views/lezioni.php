@@ -2,7 +2,7 @@
 include_once '../database/interface.php';
 include_once '../src/token.php';
 include_once '../src/navigation.php';
-include_once '../views/view_lesson_widgets.php';
+include_once '../views/lezioni_widgets.php';
 include_once '../views/filter_widgets.php';
 include_once '../views/view_widgets.php';
 
@@ -28,7 +28,7 @@ $lezioni = get_lezioni_filter(
   eliminata: $eliminate,
 );
 
-generate_before_filters_bar('view_lessons.php');
+generate_before_filters_bar('lezioni.php');
 
 if ($amministratore) {
   $eliminata_options = [
