@@ -42,7 +42,7 @@ function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
             echo "
                     <form action='../src/edit_lezione.php' method='post'>
                         <input type='hidden' name='id_lezione' value='$lesson_id'>
-                        <button class='btn btn-sm btn-danger' type='submit'>
+                        <button class='btn btn-sm btn-danger' name='delete' type='submit'>
                             <i class='fas fa-trash'></i>
                             Elimina
                         </button>
@@ -52,7 +52,7 @@ function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
                     <form action='../src/edit_lezione.php' method='post'>
                         <input type='hidden' name='id_lezione' value='$lesson_id'>
                         <input type='hidden' name='restore' value='1'>
-                        <button class='btn btn-sm btn-default' type='submit'>
+                        <button class='btn btn-sm btn-default' name='restore' type='submit'>
                             <i class='fas fa-arrow-rotate-left'></i>
                             Ripristina
                         </button>

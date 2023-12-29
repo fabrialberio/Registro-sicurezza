@@ -2,11 +2,12 @@
 include_once '../database/interface.php';
 include_once 'navigation.php';
 
-$id_lezione = filter_var($_POST['id_lezione'], FILTER_SANITIZE_NUMBER_INT);
-$restore = filter_var($_POST['restore'], FILTER_SANITIZE_NUMBER_INT);
+$id_lezione = intval(filter_var($_POST['id_lezione'], FILTER_SANITIZE_NUMBER_INT));
 
-$elimina = ($restore == 1) ? FALSE : TRUE;
+if (isset($_POST['delete'])) {
+    set_lezione_eliminata($id_lezione, TRUE);
+} elseif (isset($_POST['restore'])) {
+    set_lezione_eliminata($id_lezione, FALSE);
+}
 
-set_lezione_eliminata($id_lezione, $elimina);
-
-go_to_view_lessons();
+go_to_lezioni();

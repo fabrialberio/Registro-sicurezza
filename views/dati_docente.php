@@ -24,8 +24,6 @@ generate_before_content('Dati docente', $token);
       $id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : null;
 
       if ($id != null) {
-        echo "<input type='hidden' name='mode' value='edit'>";
-        echo "<input type='hidden' name='id' value='$id'>";
 
         $docente = get_docente($id);
         $nome = $docente['nome'];
@@ -33,8 +31,6 @@ generate_before_content('Dati docente', $token);
         $username = $docente['username'];
         $password = $docente['password'];
       } else {
-        echo "<input type='hidden' name='mode' value='add'>";
-
         $nome = '';
         $cognome = '';
         $username = '';
@@ -50,14 +46,11 @@ generate_before_content('Dati docente', $token);
     <div class='card-footer'>
       <a id='btn-cancel' href='docenti.php' class="btn btn-default">Annulla</a>
       <?php if ($id != null): ?>
-      <button id='btn-save' type='submit' class='btn btn-primary float-right'>Salva</button>
-      <form action="../src/edit_docente.php" method="post">
-        <input type='hidden' name='mode' value='delete'>
         <input type='hidden' name='id' value='<?php echo $id ?>'>
-        <button type='submit' class='btn btn-danger float-right mr-2'>Elimina</button>
-      </form>
+        <button type='submit' name='edit' class='btn btn-primary float-right'>Salva</button>
+        <button type='submit' name='delete' class='btn btn-danger float-right mr-2'>Elimina</button>
       <?php else: ?>
-      <button id='btn-add' type='submit' class='btn btn-primary float-right'>Aggiungi</button>
+        <button type='submit' name='add' class='btn btn-primary float-right'>Aggiungi</button>
       <?php endif; ?>
     </div>
   </form>
