@@ -26,10 +26,6 @@ generate_before_content('Nuova lezione', $token);
 
 <div class="card">
   <form action="../src/add_lezione.php" method="post">
-    <div class="card-header">
-      <h4 class="card-title">Dati lezione</h4>
-    </div>
-
     <div class="card-body">
       <div class="form-group">
         <label>Classe</label>
