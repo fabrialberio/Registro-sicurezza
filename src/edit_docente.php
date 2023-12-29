@@ -1,10 +1,11 @@
 <?php
 include_once '../database/interface.php';
 include_once 'navigation.php';
+include_once 'token.php';
 
 $mode = filter_var($_POST['mode'], FILTER_SANITIZE_STRING);
 
-$id_docente = filter_var($_POST['id_studente'], FILTER_SANITIZE_NUMBER_INT);
+$id_docente = intval(filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT));
 $nome = mysqli_real_escape_string($connection, $_POST['nome']);
 $cognome = mysqli_real_escape_string($connection, $_POST['cognome']);
 $username = mysqli_real_escape_string($connection, $_POST['username']);
@@ -20,8 +21,16 @@ if (!is_amministratore_by_username($token['username'])) {
 
 switch ($mode) {
 case 'add':
-    add_docente($nome, $cognome, $username, $password);
+    try {
+        add_docente($nome, $cognome, $username, $password);
+    } catch (\Throwable $th) {
+        // TODO: mostrare errore in modo migliore
+        echo "<h1>Impossibile aggiungere docente: username già esistente</h1>";
+        print($th);
+        break;
+    }
     go_to_docenti();
+
     break;
 
 case 'edit':

@@ -27,3 +27,13 @@ function generate_table(array $headers, array $row_data, array $on_row_click = n
     
     echo "</tbody></table>";
 }
+
+function generate_input_dati(string $label, string $name, string $value = null) {
+    $value_string = $value != null ? "value='$value'" : '';
+    
+    echo "
+    <div class='form-group'>
+        <label>$label</label>
+        <input type='text' class='form-control' name='$name' placeholder='$label' $value_string required>
+    </div>";
+}
