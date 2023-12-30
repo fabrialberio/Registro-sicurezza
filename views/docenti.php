@@ -17,7 +17,7 @@ generate_before_content('Docenti', $token);
 
 <div class='card'>
   <div class="card-header">
-    <button class="btn btn-primary" onclick="window.location.href='dati_docente.php'">
+    <button class="btn btn-primary" onclick="window.location.href='dati_docente.php?new'">
       <i class="fas fa-plus"></i>
       Aggiungi docente
     </button>

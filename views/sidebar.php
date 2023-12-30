@@ -30,17 +30,26 @@ $amministratore = is_amministratore_by_username($token['username']);
 <aside class="main-sidebar sidebar-dark-primary">
     <div class="sidebar">
         <div class="user-panel mt-3 pb-2 mb-2">
-            <div class="info">
-                <a href="../src/navigation.php?logout">
-                    <?php 
-                        echo get_docente(get_id_docente_by_username($token['username']))['cognome_nome'];
-                    ?>
-                    <i class="nav-icon fas fa-right-to-bracket float-right m-1 mr-3 ml-2"></i>
-                    <?php if ($amministratore): ?>
-                        <p class="mb-0 text-warning">
-                            <small>Amministratore</small>
-                        </p>
-                    <?php endif; ?>
+            <div class="info text-light">
+                <?php 
+                    echo get_docente(get_id_docente_by_username($token['username']))['cognome_nome'];
+                ?>
+                <?php if ($amministratore): ?>
+                <p class="mb-0 text-warning">
+                    <small>Amministratore</small>
+                </p>
+                <?php endif; ?>
+            </div>
+            <div class="">
+                <?php if ($amministratore): ?>
+                <a class="btn btn-flat-light float-left mr-2" href="dati_docente.php?id=<?php echo get_id_docente_by_username($token['username']) ?>">
+                    <i class="fas fa-user"></i>
+                    <span class="ml-1">Profilo</span>
+                </a>
+                <?php endif; ?>
+                <a class="btn btn-flat-light float-left" href="../src/navigation.php?logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="ml-1">Esci</span>
                 </a>
             </div>
         </div>

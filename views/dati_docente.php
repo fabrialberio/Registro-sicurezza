@@ -21,10 +21,10 @@ generate_before_content('Dati docente', $token);
   <form action="../src/edit_docente.php" method="post">
     <div class='card-body'>
       <?php
-      $id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : null;
-
-      if ($id != null) {
-
+      $new = isset($_GET['new']);
+      
+      if (!$new) {
+        $id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
         $docente = get_docente($id);
         $nome = $docente['nome'];
         $cognome = $docente['cognome'];
@@ -34,18 +34,18 @@ generate_before_content('Dati docente', $token);
         $nome = '';
         $cognome = '';
         $username = '';
-        $password = '';
+        $password = null;
       }
 
       generate_input_dati('Nome', 'nome', $nome);
       generate_input_dati('Cognome', 'cognome', $cognome);
       generate_input_dati('Username', 'username', $username);
-      generate_input_dati('Password', 'password', $password);
+      generate_input_password('password', $password, $new);
       ?>
     </div>
     <div class='card-footer'>
       <a id='btn-cancel' href='docenti.php' class="btn btn-default">Annulla</a>
-      <?php if ($id != null): ?>
+      <?php if (!$new): ?>
         <input type='hidden' name='id' value='<?php echo $id ?>'>
         <button type='submit' name='edit' class='btn btn-primary float-right'>Salva</button>
         <button type='submit' name='delete' class='btn btn-danger float-right mr-2'>Elimina</button>
