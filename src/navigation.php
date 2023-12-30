@@ -1,16 +1,12 @@
 <?php
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-
-    if ($action == 'logout') {
-        go_to_login();
-    }
+if (isset($_GET['logout'])) {
+    go_to_login('');
 }
 
 function go_to_login(?string $error = 'Sessione scaduta') {
     $location = '../index.php';
 
-    if (!is_null($error)) {
+    if (!is_null($error) && !empty($error)) {
         $location = $location . '?errore=' . htmlspecialchars($error);
     }
 

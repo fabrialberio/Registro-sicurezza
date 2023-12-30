@@ -31,7 +31,7 @@ $amministratore = is_amministratore_by_username($token['username']);
     <div class="sidebar">
         <div class="user-panel mt-3 pb-2 mb-2">
             <div class="info">
-                <a href="../src/navigation.php?action=logout">
+                <a href="../src/navigation.php?logout">
                     <?php 
                         echo get_docente(get_id_docente_by_username($token['username']))['cognome_nome'];
                     ?>
