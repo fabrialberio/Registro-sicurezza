@@ -80,6 +80,39 @@ function get_argomento(int $id_argomento): array {
 
 // Studenti
 // -----------------------------------------------------------------------------
+function _get_ore_studente(int $id_studente): int {
+    global $connection;
+
+    $studente = get_studente($id_studente);
+
+    # Trova le lezioni in cui lo studente era presente
+    $query = mysqli_query(
+        $connection,
+        "SELECT DISTINCT lezione.id, lezione.data
+        FROM lezione
+        LEFT JOIN presenze ON lezione.id = presenze.id_lezione
+        WHERE presenze.id_studente = $id_studente AND presenze.presente = TRUE
+        ORDER BY data DESC"
+    );
+
+    $lezioni = array_map(
+        function ($l) { return get_lezione($l[0]); },
+        mysqli_fetch_all($query, MYSQLI_BOTH)
+    );
+
+    # Calcola il numero di ore di lezione
+    $sec = array_sum(
+        array_map(
+            function ($l) {
+                return strtotime($l['ora_fine']) - strtotime($l['ora_inizio']);
+            },
+            $lezioni
+        )
+    );
+
+    return $sec / 3600;
+}
+
 function get_studente(int $id_studente): array {
     global $connection;
 
@@ -109,38 +142,12 @@ function get_studente_expanded(int $id_studente): array {
 
     $studente = get_studente($id_studente);
     $classe = get_classe($studente['id_classe'])[1];
-
-    # Trova le lezioni in cui lo studente era presente
-    $query = mysqli_query(
-        $connection,
-        "SELECT DISTINCT lezione.id, lezione.data
-        FROM lezione
-        LEFT JOIN presenze ON lezione.id = presenze.id_lezione
-        WHERE presenze.id_studente = $id_studente AND presenze.presente = TRUE
-        ORDER BY data DESC"
-    );
-
-    $lezioni = array_map(
-        function ($l) { return get_lezione($l[0]); },
-        mysqli_fetch_all($query, MYSQLI_BOTH)
-    );
-
-    # Calcola il numero di ore di lezione
-    $sec = array_sum(
-        array_map(
-            function ($l) {
-                return strtotime($l['ora_fine']) - strtotime($l['ora_inizio']);
-            },
-            $lezioni
-        )
-    );
-
+    
     return [
         'id' => $studente['id'],
         'cognome_nome' => $studente['cognome_nome'],
         'classe' => $classe,
-        'lezioni' => $lezioni,
-        'ore' => $sec / 3600,
+        'ore' => _get_ore_studente($id_studente),
     ];
 }
 
@@ -197,6 +204,61 @@ function delete_studente(int $id_studente) {
         "DELETE FROM studente
         WHERE id=$id_studente"
     );
+}
+
+function get_studenti_filter(
+    ?int $id_classe = null,
+    ?int $id_argomento = null,
+    ?int $id_lezione = null,
+    ?int $min_ore = null,
+    ?int $max_ore = null,
+) {
+    global $connection;
+
+    $query = "SELECT DISTINCT studente.id, studente.cognome, studente.id_classe
+        FROM studente
+        LEFT JOIN presenze ON studente.id = presenze.id_studente
+        LEFT JOIN lezione ON presenze.id_lezione = lezione.id
+        LEFT JOIN argomento_svolto ON lezione.id = argomento_svolto.id_lezione
+        WHERE 1=1";
+
+    if (!is_null($id_classe)) {
+        $query .= " AND studente.id_classe=$id_classe";
+    }
+
+    if (!is_null($id_argomento)) {
+        $argomento = get_argomento($id_argomento)[1];
+        $query .= " AND argomento_svolto.argomento=$argomento";
+    }
+
+    if (!is_null($id_lezione)) {
+        $query .= " AND presenze.id_lezione=$id_lezione";
+    }
+    
+    $query .= " ORDER BY studente.id_classe, cognome";
+    
+    $query = mysqli_query(
+        $connection,
+        $query
+    );
+
+    $studenti = mysqli_fetch_all($query, MYSQLI_BOTH);
+
+    if (!is_null($min_ore) || !is_null($max_ore)) {
+        $studenti = array_filter(
+            $studenti,
+            function ($s) use ($min_ore, $max_ore) {
+                $ore = _get_ore_studente($s[0]);
+
+                return (
+                    (is_null($min_ore) || $ore >= $min_ore) &&
+                    (is_null($max_ore) || $ore <= $max_ore)
+                );
+            }
+        );
+    }
+
+    return $studenti;
 }
 
 // Docenti
