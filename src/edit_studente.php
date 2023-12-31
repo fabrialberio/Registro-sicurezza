@@ -17,15 +17,15 @@ $id_classe = intval(filter_var($_POST['classe'], FILTER_SANITIZE_NUMBER_INT));
 
 if (isset($_POST['add'])) {
     add_studente($nome, $cognome, $id_classe);
+    go_to_studenti('Studente aggiunto con successo');
 } elseif (isset($_POST['edit'])) {
     edit_studente($id_studente, $nome, $cognome, $id_classe);
+    go_to_studenti('Studente modificato con successo');
 } elseif (isset($_POST['delete'])) {
     try {
         delete_studente($id_studente);
+        go_to_studenti('Studente eliminato con successo');
     } catch (\Throwable $th) {
-        echo "<h1>Impossibile eliminare studente: studente presente in una lezione</h1>";
-        exit();
+        go_to_studenti(error: 'Impossibile eliminare studente: studente presente in una lezione');
     }
 }
-
-go_to_studenti();

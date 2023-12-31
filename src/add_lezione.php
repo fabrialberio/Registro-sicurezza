@@ -39,7 +39,6 @@ foreach ($studenti as $studente) {
         $presente = FALSE;
     }
     add_presenza($id_lezione, $id_studente, $presente);
+    
+    go_to_home_page('Lezione aggiunta con successo');
 }
-
-go_to_home_page();
-?>

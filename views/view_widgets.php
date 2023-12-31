@@ -1,4 +1,5 @@
 <?php
+include_once '../src/navigation.php';
 // Funzioni per generare automaticamente il boilerplate a inizio e fine pagina
 
 function generate_before_content(string $page_title, $token) {
@@ -15,20 +16,33 @@ function generate_before_content(string $page_title, $token) {
         href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'>
     <link rel='stylesheet' href='../vendor/fortawesome/font-awesome/css/all.min.css'>
     <link rel='stylesheet' href='../vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css'>
+    <script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css' rel='stylesheet'/>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js'></script>
 </head>
 
 <body style='height: auto;' class='sidebar-mini layout-fixed'>
     <div class='wrapper'>";
 
-include 'sidebar.php';
+    include 'sidebar.php';
 
-echo "
+    echo "
         <div class='content-wrapper pb-4'>
             <div style='max-width: 720px; margin: auto'>
                 <div class='content-header mb-2'>
                     <h1>$page_title</h1>
                 </div>
                 <section class='content ml-2 mr-2'>";
+
+    if (isset($_GET['error'])) {
+        $error = htmlspecialchars($_GET['error']);
+        show_toast($error, 'error');
+    }
+
+    if (isset($_GET['success'])) {
+        $success = htmlspecialchars($_GET['success']);
+        show_toast($success);
+    }
 }
 
 function generate_after_content() {
