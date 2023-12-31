@@ -13,14 +13,12 @@ $amministratore = is_amministratore_by_username($token['username']);
 generate_before_content('Lezioni', $token);
 
 
-$id_docente_get = strlen($_GET['id_docente']) ? intval($_GET['id_docente']) : null;
-$eliminate_get = strlen($_GET['eliminate']) ? boolval($_GET['eliminate']) : FALSE;
-$id_classe_get = strlen($_GET['id_classe']) ? intval($_GET['id_classe']) : null;
+$id_docente_get = !empty($_GET['id_docente']) ? intval($_GET['id_docente']) : null;
+$eliminate_get = !empty($_GET['eliminate']) ? boolval($_GET['eliminate']) : FALSE;
+$id_classe = !empty($_GET['id_classe']) ? intval($_GET['id_classe']) : null;
 
 $id_docente = $amministratore ? $id_docente_get : get_id_docente_by_username($token['username']);
 $eliminate = $amministratore ? $eliminate_get : FALSE;
-$id_classe = $id_classe_get;
-
 
 $lezioni = get_lezioni_filter(
   id_docente: $id_docente,
