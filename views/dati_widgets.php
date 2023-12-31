@@ -10,10 +10,11 @@ function generate_table(array $headers, array $row_data, array $on_row_click = n
         echo "<th>$header</th>";
     }
     echo "</tr></thead>";
-    
+
     echo "<tbody>";
-    for ($i = 0; $i < count($row_data); $i++) {
+    foreach ($row_data as $i => $row) {
         $row = $row_data[$i];
+
         $on_click = $clickable_row ?
             "onclick=\"window.location.href='" . $on_row_click[$i] . "'\"" :
             '';
