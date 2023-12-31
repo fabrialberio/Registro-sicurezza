@@ -28,13 +28,17 @@ if (isset($_POST['add'])) {
     } catch (\Throwable $th) {
         // TODO: mostrare errore in modo migliore
         echo "<h1>Impossibile aggiungere docente: username già esistente</h1>";
-        print($th);
         exit();
     }
 } elseif (isset($_POST['edit'])) {
     edit_docente($id_docente, $nome, $cognome, $username, $password_hash);
 } elseif (isset($_POST['delete'])) {
-    delete_docente($id_docente);
+    try {
+        delete_docente($id_docente);
+    } catch (\Throwable $th) {
+        echo "<h1>Impossibile eliminare docente: docente presente in una lezione</h1>";
+        exit();
+    }
 }
 
 go_to_docenti();
