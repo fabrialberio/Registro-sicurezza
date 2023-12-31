@@ -27,11 +27,11 @@ function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
     echo "
     <div class='card mb-2'>
         <div class='card-header'>
-            <h4 class='card-title'>$title</h4>
+            <h class='card-title'>$title</h>
             <div class='card-tools btn-group'>
                 <form action='../src/print_lezione.php' method='post'>
                     <input type='hidden' name='id_lezione' value='$lesson_id'>
-                    <button class='btn btn-sm btn-default mr-1' type='submit'>
+                    <button class='btn btn-default btn-sm' type='submit'>
                         <i class='fas fa-print'></i>
                         Stampa
                     </button>
@@ -42,7 +42,7 @@ function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
             echo "
                     <form action='../src/edit_lezione.php' method='post'>
                         <input type='hidden' name='id_lezione' value='$lesson_id'>
-                        <button class='btn btn-sm btn-danger' name='delete' type='submit'>
+                        <button class='btn btn-danger btn-sm ml-2' name='delete' type='submit'>
                             <i class='fas fa-trash'></i>
                             Elimina
                         </button>
@@ -52,7 +52,7 @@ function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
                     <form action='../src/edit_lezione.php' method='post'>
                         <input type='hidden' name='id_lezione' value='$lesson_id'>
                         <input type='hidden' name='restore' value='1'>
-                        <button class='btn btn-sm btn-default' name='restore' type='submit'>
+                        <button class='btn btn-default btn-sm ml-2' name='restore' type='submit'>
                             <i class='fas fa-arrow-rotate-left'></i>
                             Ripristina
                         </button>
