@@ -49,7 +49,7 @@ generate_after_filters_bar();
 
 <div class='card'>
   <div class="card-header">
-    <button class="btn btn-primary" onclick="window.location.href='add_studente.php'">
+    <button class="btn btn-primary" onclick="window.location.href='dati_studente.php?new'">
       <i class="fas fa-plus"></i>
       Aggiungi studente
     </button>
@@ -66,6 +66,10 @@ generate_after_filters_bar();
             ];
         }, $studenti);
 
+        $on_row_click = array_map(function ($s) {
+            return "dati_studente.php?id=$s[0]";
+        }, $studenti);
+
         if (empty($studenti_map)) {
             echo "
             <div class='alert alert-info'>
@@ -77,7 +81,8 @@ generate_after_filters_bar();
         } else {
             generate_table(
                 ['Classe', 'Cognome e nome', 'Ore di lezione'],
-                $studenti_map
+                $studenti_map,
+                $on_row_click
             );
         }
     ?>

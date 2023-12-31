@@ -118,7 +118,7 @@ function get_studente(int $id_studente): array {
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome) as cognome_nome, id_classe
+        "SELECT id, CONCAT(cognome, ' ', nome) as cognome_nome, id_classe, cognome, nome
         FROM studente
         WHERE id=" . $id_studente
     );
@@ -130,7 +130,7 @@ function get_studenti(): array {
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, id_classe
+        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, id_classe, cognome, nome
         FROM studente
         ORDER BY id_classe, cognome"
     );
