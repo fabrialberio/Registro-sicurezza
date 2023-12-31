@@ -120,10 +120,10 @@ function generate_table_select_presenze($id_classe) {
 
         echo "
         <tr onclick='document.getElementById(\"$checkbox_id\").click();'>
-            <td>$nome</td>
             <td style='width: 1%; white-space: nowrap;'>
-                <input id='$checkbox_id' type='checkbox' name='presenze[]' value='$id' checked=1 onclick='event.stopPropagation();'/>
+                <input id='$checkbox_id' class='mr-3' type='checkbox' name='presenze[]' value='$id' checked=1 onclick='event.stopPropagation();'/>
             </td>
+            <td>$nome</td>
         </tr>";
     }
 
@@ -186,6 +186,8 @@ function generate_input_password(string $name, string|null $password_hash, bool 
         </script>";
     }
 
+    $cancel_button_hidden = $new ? 'hidden' : '';
+
     echo "
     <div id='group-password-placeholder' class='form-group'>
         <label>Password</label>
@@ -201,7 +203,7 @@ function generate_input_password(string $name, string|null $password_hash, bool 
     </div>
     <div id='group-password-edit' class='form-group' hidden>
         <label>Nuova password</label>
-        <button class='btn btn-flat float-right' type='button' onclick='showEditPassword(false)'>
+        <button class='btn btn-flat float-right' type='button' onclick='showEditPassword(false)' $cancel_button_hidden>
             <i class='fas fa-close'></i>
             Annulla
         </button>
