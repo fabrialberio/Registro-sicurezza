@@ -7,19 +7,15 @@ date_default_timezone_set('Europe/Rome');
 function generate_select_classe(?int $id_classe = null, bool $disabled = FALSE) {
     echo "
     <div class='form-group'>
-        <label>Classe</label>";
-
+        <label>Classe</label>
+            <select name='classe' class='custom-select' " . ($disabled ? "disabled" : "") . ">";
+        
     $classi = get_classi();
-
-    if (!is_null($id_classe)) {
-        $classe_selezionata = get_classe($id_classe);
-        $classi = [$classe_selezionata];
-    }
-
-    echo "<select name='classe' class='custom-select' " . ($disabled ? "disabled" : "") . ">";
-
     foreach ($classi as $classe) {
-        echo "<option value='" . strval($classe[0]) . "'>" . $classe[1] . "</option>";
+        $questo_id = $classe[0];
+        $selected_string = $id_classe == $questo_id ? "selected" : "";
+
+        echo "<option value='$questo_id' $selected_string>" . $classe[1] . "</option>";
     }
 
     echo "</select>";
