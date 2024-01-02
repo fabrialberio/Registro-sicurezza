@@ -1,6 +1,4 @@
 <?php
-include_once '../src/navigation.php';
-
 if (file_exists(__DIR__ . '/credentials.json')) {
     $credentials = json_decode(file_get_contents(__DIR__ . '/credentials.json'), true);
 } else {
@@ -13,7 +11,7 @@ $connection = mysqli_connect(
     $credentials['username'],
     $credentials['password'],
     $credentials['database'],
-) or go_to_login('Connessione al database non riuscita');
+) or die('Connessione al database non riuscita');
 
 // Implementazione manuale della funzione che non è supportata nativamente sul server
 if (!function_exists('mysqli_fetch_all')) {
