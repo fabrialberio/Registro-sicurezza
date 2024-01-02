@@ -32,8 +32,8 @@ function go_to_studenti(?string $success = null, ?string $error = null) {
 }
 
 function _generate_toast_headers(?string $success = null, ?string $error = null) {
-    $success_string = !is_null($success) ? "success=$success" : '';
-    $error_string = !is_null($error) ? "error=$error" : '';
+    $success_string = !is_null($success) ? "success=" . htmlspecialchars($success) : '';
+    $error_string = !is_null($error) ? "error=" . htmlspecialchars($error) : '';
 
     if (!empty($success_string) && !empty($error_string)) {
         $query_string = "$success_string&$error_string";

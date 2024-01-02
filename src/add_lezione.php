@@ -1,15 +1,12 @@
 <?php
 include_once '../database/interface.php';
-include_once 'token.php';
-include_once 'navigation.php';
-
-print_r($_POST);
+include_once '../views/boilerplate.php';
 
 session_start();
-$token = decode_token_or_quit($_SESSION['token']);
+check_token($_SESSION['token']);
 
 // Inserisce la lezione nel database
-$id_docente = get_id_docente_by_username($token['username']);
+$id_docente = token_get_id_docente($_SESSION['token']);
 
 $id_classe = filter_var($_POST['classe'], FILTER_SANITIZE_NUMBER_INT);
 $ora_inizio = mysqli_real_escape_string($connection, $_POST['ora_inizio']);

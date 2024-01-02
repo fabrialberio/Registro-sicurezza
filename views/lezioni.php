@@ -4,20 +4,20 @@ include_once '../src/token.php';
 include_once '../src/navigation.php';
 include_once '../views/lezioni_widgets.php';
 include_once '../views/filter_widgets.php';
-include_once '../views/view_widgets.php';
+include_once '../views/boilerplate.php';
 
 session_start();
-$token = decode_token_or_quit($_SESSION['token']);
-$amministratore = is_amministratore_by_username($token['username']);
+check_token($_SESSION['token']);
+generate_before_content('Lezioni', $_SESSION['token']);
 
-generate_before_content('Lezioni', $token);
 
+$amministratore = token_is_amministratore($_SESSION['token']);
 
 $id_docente_get = !empty($_GET['id_docente']) ? intval($_GET['id_docente']) : null;
 $eliminate_get = !empty($_GET['eliminate']) ? boolval($_GET['eliminate']) : FALSE;
 $id_classe = !empty($_GET['id_classe']) ? intval($_GET['id_classe']) : null;
 
-$id_docente = $amministratore ? $id_docente_get : get_id_docente_by_username($token['username']);
+$id_docente = $amministratore ? $id_docente_get : token_get_id_docente($_SESSION['token']);
 $eliminate = $amministratore ? $eliminate_get : FALSE;
 
 $lezioni = get_lezioni_filter(

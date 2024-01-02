@@ -1,6 +1,6 @@
 <?php
 include_once '../vendor/autoload.php';
-include_once 'navigation.php';
+include_once '../database/interface.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -28,48 +28,40 @@ function get_token(string $username): string {
     return $jwt;
 }
 
-function check_token(string|null $jwt): bool {
-    if (is_null($jwt)) {
-        return false;
-    }
-
-    $expires = decode_token($jwt)['exp'];
-    
-    if ($expires < time()) {
-        return false;
-    }
-
-    return true;
-}
-
 function decode_token(string $jwt): array {
     global $public_key;
 
     return (array) JWT::decode($jwt, new Key($public_key, 'RS256'));
 }
 
-function decode_token_or_quit(string|null $jwt): array|bool {
+function token_get_id_docente(string $jwt): int {
+    $token = decode_token($jwt);
+    $username = $token['username'];
+
+    return get_id_docente_by_username($username);
+}
+
+function token_is_valid(?string $jwt): bool {
     if (is_null($jwt)) {
-        // Token nullo
-        go_to_login();
         return false;
     }
 
     try {
         $token = decode_token($jwt);
     } catch (Exception $e) {
-        // Errore di decodifica (token invalido)
-        go_to_login();
+        return false;
     }
 
     if ($token['exp'] < time()) {
-        // Token scaduto
-        go_to_login();
+        return false;
     }
 
-    return $token;
+    return true;
 }
 
-function token_get_username(string $jwt) {
-    return decode_token($jwt)['username'];
+function token_is_amministratore(string $jwt) {
+    $token = decode_token($jwt);
+    $username = $token['username'];
+
+    return is_amministratore_by_username($username);
 }

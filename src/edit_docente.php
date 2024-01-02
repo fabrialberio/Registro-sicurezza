@@ -1,14 +1,10 @@
 <?php
 include_once '../database/interface.php';
-include_once 'navigation.php';
-include_once 'token.php';
+include_once '../views/boilerplate.php';
 
 session_start();
-$token = decode_token_or_quit($_SESSION['token']);
+check_token_amministratore($_SESSION['token']);
 
-if (!is_amministratore_by_username($token['username'])) {
-    go_to_login();
-}
 
 $id_docente = intval(filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT));
 $nome = mysqli_real_escape_string($connection, $_POST['nome']);

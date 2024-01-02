@@ -1,6 +1,10 @@
 <?php
 include_once '../database/interface.php';
-include_once 'navigation.php';
+include_once '../views/boilerplate.php';
+
+session_start();
+check_token_amministratore($_SESSION['token']);
+
 
 $id_lezione = intval(filter_var($_POST['id_lezione'], FILTER_SANITIZE_NUMBER_INT));
 

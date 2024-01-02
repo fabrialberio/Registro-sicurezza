@@ -3,12 +3,11 @@ include_once '../database/interface.php';
 include_once '../src/token.php';
 include_once '../src/navigation.php';
 include_once '../views/dati_widgets.php';
-include_once '../views/view_widgets.php';
+include_once '../views/boilerplate.php';
 
 session_start();
-$token = decode_token_or_quit($_SESSION['token']);
-
-generate_before_content('Nuova lezione', $token);
+check_token($_SESSION['token']);
+generate_before_content('Nuova lezione', $_SESSION['token']);
 ?>
 
 <div class="card">

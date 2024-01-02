@@ -2,18 +2,13 @@
 include_once '../database/interface.php';
 include_once '../src/token.php';
 include_once '../src/navigation.php';
-include_once '../views/view_widgets.php';
+include_once '../views/boilerplate.php';
 include_once '../views/dati_widgets.php';
 include_once '../views/filter_widgets.php';
 
 session_start();
-$token = decode_token_or_quit($_SESSION['token']);
-
-if (!is_amministratore_by_username($token['username'])) {
-    go_to_login();
-}
-
-generate_before_content('Studenti', $token);
+check_token_amministratore($_SESSION['token']);
+generate_before_content('Studenti', $_SESSION['token']);
 
 
 $id_classe = !empty($_GET['id_classe']) ? intval($_GET['id_classe']) : null;
