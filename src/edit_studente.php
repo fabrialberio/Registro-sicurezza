@@ -1,6 +1,7 @@
 <?php
 include_once '../database/interface.php';
 include_once '../views/boilerplate.php';
+include_once 'navigation.php';
 
 session_start();
 check_token_amministratore($_SESSION['token']);
@@ -16,12 +17,12 @@ if (isset($_POST['add'])) {
     go_to_studenti('Studente aggiunto con successo');
 } elseif (isset($_POST['edit'])) {
     edit_studente($id_studente, $nome, $cognome, $id_classe);
-    go_to_studenti('Studente modificato con successo');
+    go_back('Studente modificato con successo');
 } elseif (isset($_POST['delete'])) {
     try {
         delete_studente($id_studente);
         go_to_studenti('Studente eliminato con successo');
     } catch (\Throwable $th) {
-        go_to_studenti(error: 'Impossibile eliminare studente: studente presente in una lezione');
+        go_back(error: 'Impossibile eliminare studente: studente presente in una lezione');
     }
 }

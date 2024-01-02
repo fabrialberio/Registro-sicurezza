@@ -1,6 +1,7 @@
 <?php
 include_once '../database/interface.php';
 include_once '../views/boilerplate.php';
+include_once 'navigation.php';
 
 session_start();
 check_token_amministratore($_SESSION['token']);
@@ -23,16 +24,16 @@ if (isset($_POST['add'])) {
         add_docente($nome, $cognome, $username, $password_hash);
         go_to_docenti('Docente aggiunto con successo');
     } catch (\Throwable $th) {
-        go_to_docenti(error: 'Impossibile aggiungere docente: username già esistente');
+        go_back(error: 'Impossibile aggiungere docente: username già esistente');
     }
 } elseif (isset($_POST['edit'])) {
     edit_docente($id_docente, $nome, $cognome, $username, $password_hash);
-    go_to_docenti('Docente modificato con successo');
+    go_back('Docente modificato con successo');
 } elseif (isset($_POST['delete'])) {
     try {
         delete_docente($id_docente);
         go_to_docenti('Docente eliminato con successo');
     } catch (\Throwable $th) {
-        go_to_docenti(error: 'Impossibile eliminare docente: docente presente in una lezione');
+        go_back(error: 'Impossibile eliminare docente: docente presente in una lezione');
     }
 }

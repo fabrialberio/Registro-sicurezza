@@ -10,7 +10,7 @@ check_token($_SESSION['token']);
 generate_before_content('Nuova lezione', $_SESSION['token']);
 
 if (!isset($_POST['classe'])) {
-  go_to_home_page();
+  go_back();
 }
 ?>
 
