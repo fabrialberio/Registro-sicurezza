@@ -1,8 +1,3 @@
-<?php
-include_once '../database/interface.php';
-
-$amministratore = is_amministratore_by_username($token['username']);
-?>
 <script>
     function showSidebar() {
         document.getElementsByClassName('sidebar-mini')[0].classList.add('sidebar-open');
@@ -32,7 +27,7 @@ $amministratore = is_amministratore_by_username($token['username']);
         <div class="user-panel mt-3 pb-2 mb-2">
             <div class="info text-light">
                 <?php 
-                    echo get_docente(get_id_docente_by_username($token['username']))['cognome_nome'];
+                    echo get_docente($id_docente)['cognome_nome'];
                 ?>
                 <?php if ($amministratore): ?>
                 <p class="mb-0 text-warning">
@@ -42,7 +37,7 @@ $amministratore = is_amministratore_by_username($token['username']);
             </div>
             <div class="">
                 <?php if ($amministratore): ?>
-                <a class="btn btn-flat-light float-left mr-2" href="dati_docente.php?id=<?php echo get_id_docente_by_username($token['username']) ?>">
+                <a class="btn btn-flat-light float-left mr-2" href="dati_docente.php?id=<?php echo $id_docente ?>">
                     <i class="fas fa-user"></i>
                     <span class="ml-1">Profilo</span>
                 </a>

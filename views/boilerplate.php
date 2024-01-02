@@ -1,8 +1,34 @@
 <?php
 include_once '../src/navigation.php';
+include_once '../src/token.php';
 // Funzioni per generare automaticamente il boilerplate a inizio e fine pagina
 
-function generate_before_content(string $page_title, $token) {
+function check_token(string $jwt) {
+    if (!token_is_valid($jwt)) {
+        go_to_login();
+    }
+}
+
+function check_token_amministratore(string $jwt, ?int $allowed_id_docente = null) {
+    check_token($jwt);
+
+    $amministratore = token_is_amministratore($jwt);
+    $is_docente = true;
+
+    if (!is_null($allowed_id_docente)) {
+        $is_docente = token_get_id_docente($jwt) == $allowed_id_docente;
+    }
+
+    if (!$amministratore || !$is_docente) {
+        go_to_login();
+    }
+}
+
+
+function generate_before_content(string $page_title, string $jwt) {
+    $amministratore = token_is_amministratore($jwt);
+    $id_docente = token_get_id_docente($jwt);
+
     echo "
 <!DOCTYPE html>
 <html style='height: auto;' lang='it'>
