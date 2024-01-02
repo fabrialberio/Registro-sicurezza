@@ -9,18 +9,19 @@ function check_token(string $jwt) {
     }
 }
 
-function check_token_amministratore(string $jwt, ?int $allowed_id_docente = null) {
+function check_token_amministratore(string $jwt) {
     check_token($jwt);
 
-    $amministratore = token_is_amministratore($jwt);
-    $is_docente = true;
-
-    if (!is_null($allowed_id_docente)) {
-        $is_docente = token_get_id_docente($jwt) == $allowed_id_docente;
-    }
-
-    if (!$amministratore || !$is_docente) {
+    if (!token_is_amministratore($jwt)) {
         go_to_login();
+    }
+}
+
+function check_token_amministratore_or(string $jwt, bool $bypass) {
+    if ($bypass) {
+        check_token($jwt);
+    } else {
+        check_token_amministratore($jwt);
     }
 }
 

@@ -164,13 +164,18 @@ function generate_table(array $headers, array $row_data, array $on_row_click = n
     echo "</tbody></table>";
 }
 
-function generate_input_dati(string $label, string $name, string $value = null) {
+function generate_input_dati(string $label, string $name, ?string $value = null, bool $disabled = false) {
     $value_string = $value != null ? "value='$value'" : '';
+    $disabled_string = $disabled ? 'disabled' : '';
+
+    if ($disabled) {
+        echo "<input type='hidden' name='$name' $value_string>";
+    }
     
     echo "
     <div class='form-group'>
         <label>$label</label>
-        <input type='text' class='form-control' name='$name' placeholder='$label' $value_string required>
+        <input type='text' class='form-control' name='$name' placeholder='$label' $value_string $disabled_string required>
     </div>";
 }
 

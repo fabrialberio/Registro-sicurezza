@@ -36,12 +36,10 @@
                 <?php endif; ?>
             </div>
             <div class="">
-                <?php if ($amministratore): ?>
-                <a class="btn btn-flat-light float-left mr-2" href="dati_docente.php?id=<?php echo $id_docente ?>">
+                <a class="btn btn-flat-light float-left mr-2" href="dati_docente.php?profile">
                     <i class="fas fa-user"></i>
                     <span class="ml-1">Profilo</span>
                 </a>
-                <?php endif; ?>
                 <a class="btn btn-flat-light float-left" href="../src/navigation.php?logout">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="ml-1">Esci</span>
