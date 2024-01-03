@@ -89,7 +89,9 @@ function _get_ore_studente(int $id_studente): int {
         "SELECT DISTINCT lezione.id, lezione.data
         FROM lezione
         LEFT JOIN presenze ON lezione.id = presenze.id_lezione
-        WHERE presenze.id_studente = $id_studente AND presenze.presente = TRUE
+        WHERE presenze.id_studente = $id_studente
+        AND presenze.presente = TRUE
+        AND lezione.eliminata = FALSE
         ORDER BY data DESC"
     );
 
