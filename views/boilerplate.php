@@ -43,7 +43,7 @@ function generate_before_content(string $page_title, string $jwt) {
         href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'>
     <link rel='stylesheet' href='../vendor/fortawesome/font-awesome/css/all.min.css'>
     <link rel='stylesheet' href='../vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css'>
-    <script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+    <script src='https://code.jquery.com/jquery-1.9.1.min.js'></script>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css' rel='stylesheet'/>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js'></script>
 </head>
