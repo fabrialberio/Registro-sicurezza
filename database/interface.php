@@ -13,6 +13,11 @@ $connection = mysqli_connect(
     $credentials['database'],
 ) or die('Connessione al database non riuscita');
 
+mysqli_query(
+    $connection,
+    "SET NAMES 'utf8'"
+);
+
 // Implementazione manuale della funzione che non è supportata nativamente sul server
 if (!function_exists('mysqli_fetch_all')) {
     function mysqli_fetch_all($result, $resulttype = MYSQLI_NUM) {
