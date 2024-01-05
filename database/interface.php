@@ -494,7 +494,7 @@ function get_lezioni_filter(
 
 // Presenze
 // -----------------------------------------------------------------------------
-function get_presenze(int $id_lezione): array {
+function get_presenze_by_lezione(int $id_lezione): array {
     global $connection;
 
     $query = mysqli_query(
@@ -507,10 +507,23 @@ function get_presenze(int $id_lezione): array {
     return mysqli_fetch_all($query, MYSQLI_BOTH);
 }
 
+function get_presenze_by_studente(int $id_studente): array {
+    global $connection;
+
+    $query = mysqli_query(
+        $connection,
+        "SELECT id, id_studente, presente, id_lezione
+        FROM presenze
+        WHERE id_studente=$id_studente"
+    );
+
+    return mysqli_fetch_all($query, MYSQLI_BOTH);
+}
+
 function get_presenze_expanded(int $id_lezione): array {
     global $connection;
 
-    $presenze = get_presenze($id_lezione);
+    $presenze = get_presenze_by_lezione($id_lezione);
     $presenze_expanded = [];
 
     foreach($presenze as $p) {

@@ -4,6 +4,7 @@ include_once '../src/token.php';
 include_once '../src/navigation.php';
 include_once '../views/boilerplate.php';
 include_once '../views/dati_widgets.php';
+include_once '../views/lezioni_widgets.php';
 
 session_start();
 check_token_amministratore($_SESSION['token']);
@@ -46,6 +47,23 @@ generate_before_content('Dati studente', $_SESSION['token']);
   </form>
 </div>
 
+<h5 class='mb-2 mt-4'>Lezioni in cui è presente</h5>
 <?php
+$presenze = get_presenze_by_studente($id);
+
+if (count($presenze) == 0) {
+  echo "
+  <div class='alert alert-info'>
+    <h5><i class='icon fas fa-info'></i>Nessuna lezione trovata</h5>
+    <p>
+      Lo studente non è stato presente in nessuna lezione.
+    </p>
+  </div>";
+} else {
+  foreach ($presenze as $presenza) {
+    generate_card_lezione($presenza['id_lezione'], false);
+  }
+}
+
+
 generate_after_content();
-?>
