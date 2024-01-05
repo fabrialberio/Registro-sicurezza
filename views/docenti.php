@@ -8,6 +8,8 @@ include_once '../views/dati_widgets.php';
 session_start();
 check_token_amministratore($_SESSION['token']);
 generate_before_content('Docenti', $_SESSION['token']);
+
+$id_docente_token = token_get_id_docente($_SESSION['token']);
 ?>
 
 <div class='card'>
@@ -21,8 +23,12 @@ generate_before_content('Docenti', $_SESSION['token']);
     <?php
         $docenti = get_docenti();
 
-        $on_row_click = array_map(function ($d) {
-          return 'dati_docente.php?id=' . $d[0];
+        $on_row_click = array_map(function ($d) use ($id_docente_token) {
+          if ($d[0] == $id_docente_token) {
+            return 'dati_docente.php?profile';
+          } else {
+            return 'dati_docente.php?id=' . $d[0];
+          }
         }, $docenti);
         
         $docenti = array_map(function ($d) {
