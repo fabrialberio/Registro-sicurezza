@@ -51,16 +51,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v6.9.0",
+            "version": "v6.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "f03270e63eaccf3019ef0f32849c497385774e11"
+                "reference": "a49db6f0a5033aef5143295342f1c95521b075ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/f03270e63eaccf3019ef0f32849c497385774e11",
-                "reference": "f03270e63eaccf3019ef0f32849c497385774e11",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/a49db6f0a5033aef5143295342f1c95521b075ff",
+                "reference": "a49db6f0a5033aef5143295342f1c95521b075ff",
                 "shasum": ""
             },
             "require": {
@@ -108,22 +108,22 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v6.9.0"
+                "source": "https://github.com/firebase/php-jwt/tree/v6.10.0"
             },
-            "time": "2023-10-05T00:24:42+00:00"
+            "time": "2023-12-01T16:26:39+00:00"
         },
         {
             "name": "fortawesome/font-awesome",
-            "version": "6.5.0",
+            "version": "6.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "8302f1cca7e6c674fdb636bcc80b728548077c17"
+                "reference": "deeea78c52bfe00b6e251ffddccf5570d5fdb05e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/8302f1cca7e6c674fdb636bcc80b728548077c17",
-                "reference": "8302f1cca7e6c674fdb636bcc80b728548077c17",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/deeea78c52bfe00b6e251ffddccf5570d5fdb05e",
+                "reference": "deeea78c52bfe00b6e251ffddccf5570d5fdb05e",
                 "shasum": ""
             },
             "type": "library",
@@ -155,7 +155,7 @@
                 "issues": "https://github.com/FortAwesome/Font-Awesome/issues",
                 "source": "https://github.com/FortAwesome/Font-Awesome"
             },
-            "time": "2023-11-28T18:45:05+00:00"
+            "time": "2023-11-30T22:38:48+00:00"
         },
         {
             "name": "setasign/tfpdf",
