@@ -11,6 +11,7 @@ check_token_amministratore($_SESSION['token']);
 generate_before_content('Studenti', $_SESSION['token']);
 
 
+$nascosti = !empty($_GET['nascosti']) ? boolval($_GET['nascosti']) : false;
 $id_classe = !empty($_GET['id_classe']) ? intval($_GET['id_classe']) : null;
 $min_ore = !empty($_GET['min_ore']) ? intval($_GET['min_ore']) : null;
 $max_ore = !empty($_GET['max_ore']) ? intval($_GET['max_ore']) : null;
@@ -18,10 +19,17 @@ $max_ore = !empty($_GET['max_ore']) ? intval($_GET['max_ore']) : null;
 $studenti = get_studenti_filter(
   id_classe: $id_classe,
   min_ore: $min_ore,
-  max_ore: $max_ore
+  max_ore: $max_ore,
+  nascosto: $nascosti,
 );
 
 generate_before_filters_bar('studenti.php');
+
+$nascosti_options = [
+    0 => [TRUE, 'Nascosti'],
+];
+generate_filter_select('nascosti', 'Non nascosti', $nascosti_options, $_GET['nascosti'] ?? null);
+
 
 $classi_options = array_map(
     function($c) {

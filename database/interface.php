@@ -123,21 +123,23 @@ function get_studente(int $id_studente): array {
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome) as cognome_nome, id_classe, cognome, nome
+        "SELECT id, CONCAT(cognome, ' ', nome) as cognome_nome, id_classe, cognome, nome, nascosto
         FROM studente
         WHERE id=" . $id_studente
     );
     return mysqli_fetch_all($query, MYSQLI_BOTH)[0];
 }
 
-function get_studenti(): array {
+function get_studenti(bool $nascosti = false): array {
     global $connection;
+
+    $nascosti_str = $nascosti ? '' : 'WHERE nascosto=FALSE';
 
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, id_classe, cognome, nome
+        "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome, id_classe, cognome, nome, nascosto
         FROM studente
-        ORDER BY id_classe, cognome"
+        ORDER BY id_classe, cognome" . $nascosti_str
     );
     return mysqli_fetch_all($query, MYSQLI_BOTH);
 }
@@ -153,17 +155,20 @@ function get_studente_expanded(int $id_studente): array {
         'cognome_nome' => $studente['cognome_nome'],
         'classe' => $classe,
         'ore' => _get_ore_studente($id_studente),
+        'nascosto' => $studente['nascosto'],
     ];
 }
 
-function get_studenti_by_classe(int $id_classe): array {
+function get_studenti_by_classe(int $id_classe, bool $nascosti = false): array {
     global $connection;
+
+    $nascosti_str = $nascosti ? '' : 'AND nascosto=FALSE';
 
     $query = mysqli_query(
         $connection,
         "SELECT id, CONCAT(cognome, ' ', nome) AS cognome_nome
         FROM studente
-        WHERE id_classe=" . $id_classe . "
+        WHERE id_classe=" . $id_classe . " " . $nascosti_str . "
         ORDER BY cognome"
     );
     return mysqli_fetch_all($query, MYSQLI_BOTH);
@@ -172,14 +177,15 @@ function get_studenti_by_classe(int $id_classe): array {
 function add_studente(
     string $nome,
     string $cognome,
-    int $id_classe
+    int $id_classe,
+    bool $nascosto = false
 ): int {
     global $connection;
 
     mysqli_query(
         $connection,
-        "INSERT INTO studente(nome, cognome, id_classe) VALUES
-        ('$nome', '$cognome', $id_classe)"
+        "INSERT INTO studente(nome, cognome, id_classe, nascosto) VALUES
+        ('$nome', '$cognome', $id_classe, $nascosto)"
     );
 
     return mysqli_insert_id($connection);
@@ -189,14 +195,17 @@ function edit_studente(
     int $id_studente,
     string $nome,
     string $cognome,
-    int $id_classe
+    int $id_classe,
+    bool $nascosto
 ) {
     global $connection;
+
+    $nascosto_str = $nascosto ? 'TRUE' : 'FALSE';
 
     mysqli_query(
         $connection,
         "UPDATE studente
-        SET nome='$nome', cognome='$cognome', id_classe=$id_classe
+        SET nome='$nome', cognome='$cognome', id_classe=$id_classe, nascosto=$nascosto_str
         WHERE id=$id_studente"
     );
 }
@@ -211,12 +220,26 @@ function delete_studente(int $id_studente) {
     );
 }
 
+function set_studente_nascosto(int $id_studente, bool $nascosto = TRUE) {
+    global $connection;
+    
+    $nascosto = $nascosto ? 1 : 0;
+
+    mysqli_query(
+        $connection,
+        "UPDATE studente
+        SET nascosto=$nascosto
+        WHERE id=$id_studente"
+    );
+}
+
 function get_studenti_filter(
     ?int $id_classe = null,
     ?int $id_argomento = null,
     ?int $id_lezione = null,
     ?int $min_ore = null,
     ?int $max_ore = null,
+    ?bool $nascosto = null,
 ) {
     global $connection;
 
@@ -240,6 +263,14 @@ function get_studenti_filter(
         $query .= " AND presenze.id_lezione=$id_lezione";
     }
     
+    if (!is_null($nascosto)) {
+        if ($nascosto) {
+            $query .= " AND studente.nascosto=TRUE";
+        } else {
+            $query .= " AND studente.nascosto=FALSE";
+        }
+    }
+
     $query .= " ORDER BY studente.id_classe, cognome";
     
     $query = mysqli_query(

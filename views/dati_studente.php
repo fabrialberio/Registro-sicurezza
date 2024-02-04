@@ -23,15 +23,18 @@ generate_before_content('Dati studente', $_SESSION['token']);
         $nome = $studente['nome'];
         $cognome = $studente['cognome'];
         $id_classe = $studente['id_classe'];
+        $nascosto = $studente['nascosto'];
       } else {
         $nome = '';
         $cognome = '';
         $id_classe = null;
+        $nascosto = false;
       }
 
       generate_input_dati('Nome', 'nome', $nome);
       generate_input_dati('Cognome', 'cognome', $cognome);
       generate_select_classe($id_classe);
+      generate_bool_select('Nascosto/a', 'nascosto', $nascosto);
       ?>
     </div>
     <div class='card-footer'>

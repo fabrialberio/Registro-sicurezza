@@ -218,3 +218,16 @@ function generate_input_password(string $name, string|null $password_hash, bool 
     </div>
     <input type='hidden' name='$name' value='$password_hash'>";
 }
+
+function generate_bool_select(string $label, string $name, ?bool $value = null) {
+    $value_string = $value != null ? "value='$value'" : '';
+
+    echo "
+    <div class='form-group'>
+        <label>$label</label>
+        <select name='$name' class='custom-select'>
+            <option value='0'" . ($value == false ? ' selected' : '') . ">No</option>
+            <option value='1'" . ($value == true ? ' selected' : '') . ">Si</option>
+        </select>
+    </div>";
+}
