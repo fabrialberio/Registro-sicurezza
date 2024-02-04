@@ -48,7 +48,7 @@ function generate_before_content(string $page_title, string $jwt) {
     <script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js'></script>
 </head>
 
-<body style='height: auto;' class='sidebar-mini layout-fixed'>
+<body style='height: auto;' class='layout-fixed'>
     <div class='wrapper'>";
 
     include 'sidebar.php';

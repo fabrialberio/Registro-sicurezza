@@ -1,12 +1,26 @@
 <script>
     function showSidebar() {
-        document.getElementsByClassName('sidebar-mini')[0].classList.add('sidebar-open');
+        body = document.getElementsByTagName('body')[0]
+        body.classList.add('sidebar-open');
+        body.classList.remove('sidebar-collapse');
+    }
+    
+    function hideSidebar() {
+        body = document.getElementsByTagName('body')[0]
+        body.classList.remove('sidebar-open');
+        body.classList.add('sidebar-collapse');
     }
 </script>
 
 <style>
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 991px) {
         .show-only-on-mobile {
+            display: none !important;
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        .show-only-on-desktop {
             display: none !important;
         }
     }
@@ -24,6 +38,11 @@
 
 <aside class="main-sidebar sidebar-dark-primary">
     <div class="sidebar">
+        <div class="">
+            <a class="btn btn-flat-light mt-2 show-only-on-mobile" onclick="hideSidebar();">
+                <i class="fas fa-close"></i>
+            </a>
+        </div>
         <div class="user-panel mt-3 pb-2 mb-2">
             <div class="info text-light">
                 <?php 
