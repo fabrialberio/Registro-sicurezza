@@ -49,13 +49,6 @@ if (isset($_POST['add'])) {
     check_token_amministratore($_SESSION['token'], $id_docente);
     edit_lezione($id_lezione, $id_docente, $id_classe, $ora_inizio, $ora_fine, $data);
 
-    foreach ($argomenti as $argomento) {
-        if (!empty($argomento)) {
-            $argomento = mysqli_real_escape_string($connection, $argomento);
-            //edit_argomento_svolto($id_lezione, $argomento);
-        }
-    }
-
     $studenti = get_studenti_by_classe($id_classe);
     foreach ($studenti as $studente) {
         $id_studente = $studente['id'];
