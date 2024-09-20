@@ -50,7 +50,7 @@ $pdf->Cell(-80, 10, 'Firma', 1, 1, 'C');
 $pdf->SetFont('Arial', '', 11);
 foreach (get_presenze_expanded($lezione['id']) as $p) {
   if ($p['presente'] == 1) {
-    $pdf->Cell(0, 8, $p['studente'], 1, 0);
+    $pdf->Cell(0, 8, $p['studente'][1], 1, 0);
     $pdf->Cell(-80, 8, '', 1, 1, 'R');
   }
 }

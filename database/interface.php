@@ -578,7 +578,7 @@ function get_presenze_expanded(int $id_lezione): array {
     foreach($presenze as $p) {
         $presenze_expanded[] = [
             'id' => $p[0],
-            'studente' => get_studente($p[1])[1],
+            'studente' => get_studente($p[1]),
             'presente' => $p[2],
         ];
     }
