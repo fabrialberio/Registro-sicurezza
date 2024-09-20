@@ -8,7 +8,7 @@ function generate_select_classe(?int $id_classe = null, bool $disabled = FALSE) 
     echo "
     <div class='form-group'>
         <label>Classe</label>
-            <select name='classe' class='custom-select' " . ($disabled ? "disabled" : "") . ">";
+            <select name='id_classe' class='custom-select' " . ($disabled ? "disabled" : "") . ">";
         
     $classi = get_classi();
     foreach ($classi as $classe) {
@@ -21,7 +21,7 @@ function generate_select_classe(?int $id_classe = null, bool $disabled = FALSE) 
     echo "</select>";
     
     if ($disabled) {
-        echo "<input type='hidden' name='classe' value='" . strval($id_classe) . "'>";
+        echo "<input type='hidden' name='id_classe' value='" . strval($id_classe) . "'>";
     }
 
     echo "</div>";
@@ -72,7 +72,7 @@ function generate_input_ora_inizio_fine(?string $ora_inizio = null, ?string $ora
     </div>";
 }
 
-function generate_datalist_argomenti() {
+function generate_datalist_argomenti(array $id_argomenti_selezionati = null) {
     echo "
     <script src='../src/inputArgomenti.js'></script>
     <script>
@@ -97,12 +97,18 @@ function generate_datalist_argomenti() {
     }
 
     echo "
-            </datalist>
+            </datalist>";
+
+    foreach ($id_argomenti_selezionati as $id) {
+        print_r($id);
+    }
+
+    echo "
         </div>
     </div>";
 }
 
-function generate_table_select_presenze($id_classe) {
+function generate_table_select_presenze($id_classe, $id_lezione = null) {
     echo "
     <div class='form-group'>
         <label>Presenze</label>
@@ -110,18 +116,31 @@ function generate_table_select_presenze($id_classe) {
             <div class='card-body table-responsive p-0'>
                 <table class='table table-hover table-sm'>";
 
-    $studenti = get_studenti_by_classe($id_classe);
+    if ($id_lezione != null) {
+        $presenze_expanded = get_presenze_expanded($id_lezione);
+        $presenze = array_map(function($p) {
+            return $p['presente'];
+        }, $presenze_expanded);
+        $studenti = array_map(function($p) {
+            return $p['studente'];
+        }, $presenze_expanded);
 
-    foreach ($studenti as $s) {
+    } else {
+        $studenti = get_studenti_by_classe($id_classe);
+        $presenze = array_fill(0, count($studenti), 1);
+    }
+
+    foreach ($studenti as $i=>$s) {
         $id = $s[0];
         $nome = strval($s[1]);
 
+        $checked = $presenze[$i] == 1 ? 'checked' : '';
         $checkbox_id = "presenza_studente_$id";
 
         echo "
         <tr onclick='document.getElementById(\"$checkbox_id\").click();'>
             <td style='width: 1%; white-space: nowrap;'>
-                <input id='$checkbox_id' class='mr-3' type='checkbox' name='presenze[]' value='$id' checked=1 onclick='event.stopPropagation();'/>
+                <input id='$checkbox_id' class='mr-3' type='checkbox' name='presenze[]' value='$id' $checked onclick='event.stopPropagation();'/>
             </td>
             <td>$nome</td>
         </tr>";
