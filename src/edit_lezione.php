@@ -13,13 +13,10 @@ $id_classe = intval(filter_var($_POST['id_classe'], FILTER_SANITIZE_NUMBER_INT))
 $ora_inizio = mysqli_real_escape_string($connection, $_POST['ora_inizio']);
 $ora_fine = mysqli_real_escape_string($connection, $_POST['ora_fine']);
 $data = mysqli_real_escape_string($connection, $_POST['data']);
-$argomenti = $_POST['argomenti'];
-$presenze = $_POST['presenze'];
+$argomenti = $_POST['argomenti'] ?? [];
+$presenze = $_POST['presenze'] ?? [];
 
 if (isset($_POST['add'])) {
-    print_r($_POST);
-
-
     $id_docente = token_get_id_docente($_SESSION['token']);
     $id_lezione = add_lezione($id_docente, $id_classe, $ora_inizio, $ora_fine, $data);
 
@@ -51,6 +48,21 @@ if (isset($_POST['add'])) {
 } elseif (isset($_POST['edit'])) {
     check_token_amministratore($_SESSION['token'], $id_docente);
     edit_lezione($id_lezione, $id_docente, $id_classe, $ora_inizio, $ora_fine, $data);
-    // TODO: Fare anche le presenze
+
+    foreach ($argomenti as $argomento) {
+        if (!empty($argomento)) {
+            $argomento = mysqli_real_escape_string($connection, $argomento);
+            //edit_argomento_svolto($id_lezione, $argomento);
+        }
+    }
+
+    $studenti = get_studenti_by_classe($id_classe);
+    foreach ($studenti as $studente) {
+        $id_studente = $studente['id'];
+        $presente = in_array($id_studente, $presenze) ? 1 : 0;
+
+        edit_presenza_by_lezione_and_studente($id_lezione, $id_studente, $presente);
+    }
+    
     go_back('Lezione modificata con successo');
 }

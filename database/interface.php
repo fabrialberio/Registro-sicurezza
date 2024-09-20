@@ -607,6 +607,23 @@ function add_presenza(
     return mysqli_insert_id($connection);
 }
 
+function edit_presenza_by_lezione_and_studente(
+    int $id_lezione,
+    int $id_studente,
+    bool $presente
+) {
+    global $connection;
+
+    $presente = $presente ? 1 : 0;
+
+    mysqli_query(
+        $connection,
+        "UPDATE presenze
+        SET presente=$presente
+        WHERE id_lezione=$id_lezione AND id_studente=$id_studente"
+    );
+}
+
 // Permessi
 // -----------------------------------------------------------------------------
 function get_permessi(int $id_docente): array | null {
