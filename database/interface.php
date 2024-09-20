@@ -462,6 +462,24 @@ function set_lezione_eliminata(int $id_lezione, bool $eliminata = TRUE) {
     );
 }
 
+function edit_lezione(
+    int $id_lezione,
+    int $id_docente,
+    int $id_classe,
+    string $ora_inizio,
+    string $ora_fine,
+    string $data,
+) {
+    global $connection;
+
+    mysqli_query(
+        $connection,
+        "UPDATE lezione
+        SET id_docente=$id_docente, id_classe=$id_classe, ora_inizio='$ora_inizio', ora_fine='$ora_fine', data='$data'
+        WHERE id=$id_lezione"
+    );
+}
+
 function get_lezioni_filter(
     ?int $id_docente = null,
     ?int $id_classe = null,

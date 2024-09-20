@@ -38,6 +38,11 @@ function generate_card_lezione(int $lesson_id, bool $amministratore = FALSE) {
                 </form>";
 
     if ($amministratore) {
+        echo "
+                    <a href=\"../views/dati_lezione.php?id=$lesson_id\" class='btn btn-default btn-sm ml-2'>
+                        <i class='fas fa-edit'></i>
+                        Modifica
+                    </a>";
         if (!$lezione['eliminata']) {
             echo "
                     <form action='../src/edit_lezione.php' method='post'>
