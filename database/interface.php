@@ -36,9 +36,9 @@ function get_classi(): array {
     
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(sezione, ' ', anno_inizio, '-', RIGHT(anno_inizio + 1, 2)) AS sezione_anno, sezione, anno_inizio
+        "SELECT id, CONCAT(anno, sezione) AS classe
         FROM classe
-        ORDER BY anno_inizio DESC, sezione"
+        ORDER BY anno, sezione"
     );
     return mysqli_fetch_all($query, MYSQLI_BOTH);
 }
@@ -48,7 +48,7 @@ function get_classe(int $id_classe): array {
     
     $query = mysqli_query(
         $connection,
-        "SELECT id, CONCAT(sezione, ' ', anno_inizio, '-', RIGHT(anno_inizio + 1, 2)) AS sezione_anno, sezione, anno_inizio
+        "SELECT id, CONCAT(anno, sezione)
         FROM classe
         WHERE id =" . strval($id_classe)
     );
@@ -178,7 +178,7 @@ function add_studente(
     string $nome,
     string $cognome,
     int $id_classe,
-    bool $nascosto = false
+    int $nascosto = 0
 ): int {
     global $connection;
 

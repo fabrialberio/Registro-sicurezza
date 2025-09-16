@@ -10,7 +10,7 @@ check_token_amministratore($_SESSION['token']);
 $id_studente = intval(filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT));
 $nome = mysqli_real_escape_string($connection, $_POST['nome']);
 $cognome = mysqli_real_escape_string($connection, $_POST['cognome']);
-$id_classe = intval(filter_var($_POST['classe'], FILTER_SANITIZE_NUMBER_INT));
+$id_classe = intval(filter_var($_POST['id_classe'], FILTER_SANITIZE_NUMBER_INT));
 $nascosto = $_POST['nascosto'] == '1' ? 1 : 0;
 
 

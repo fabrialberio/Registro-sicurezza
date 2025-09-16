@@ -14,7 +14,7 @@ generate_before_content('Nuova lezione', $_SESSION['token']);
   <form action="nuova_lezione_presenze.php" method="post">
     <div class="card-body">
       <?php
-      generate_select_classe(null, false, true);
+      generate_select_classe();
       generate_input_data();
       generate_input_ora_inizio_fine();
       ?>
