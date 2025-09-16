@@ -4,7 +4,7 @@ include_once '../database/interface.php';
 // TODO: L'ora non è proprio proprio corretta perché è l'ora del server e non dell'utente
 date_default_timezone_set('Europe/Rome');
 
-function generate_select_classe(?int $id_classe = null, bool $disabled = FALSE) {
+function generate_select_classe(?int $id_classe = null, bool $disabled = FALSE, bool $only_active_classes = FALSE) {
     echo "
     <div class='form-group'>
         <label>Classe</label>
@@ -12,6 +12,18 @@ function generate_select_classe(?int $id_classe = null, bool $disabled = FALSE) 
         
     $classi = get_classi();
     foreach ($classi as $classe) {
+        if ($only_active_classes) {
+            $anno_inizio = $classe['anno_inizio'];
+            
+            $current_date = new DateTime();
+            $start_date = new DateTime("$anno_inizio-07-01");
+            $end_date = new DateTime(($anno_inizio + 1) . "-06-30");
+            
+            if ($current_date < $start_date || $current_date > $end_date) {
+                continue;
+            }
+        }
+
         $questo_id = $classe[0];
         $selected_string = $id_classe == $questo_id ? "selected" : "";
 
