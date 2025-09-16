@@ -14,11 +14,11 @@ generate_before_content('Classi', $_SESSION['token']);
         $classi = get_classi();
 
         $classi = array_map(function ($c) {
-            return [$c[1]];
+            return [$c['sezione'], $c['anno_inizio'], $c['anno_inizio'] + 1];
         }, $classi);
 
         generate_table(
-            ['Anno e sezione'],
+            ['Sezione', 'Anno di inizio', 'Anno di fine'],
             $classi,
         );
     ?>
