@@ -178,7 +178,7 @@ function add_studente(
     string $nome,
     string $cognome,
     int $id_classe,
-    int $nascosto = 0
+    bool $nascosto = false
 ): int {
     global $connection;
 
