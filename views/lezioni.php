@@ -35,25 +35,25 @@ if ($amministratore) {
   generate_filter_select('eliminate', 'Non eliminate', $eliminata_options, $_GET['eliminate'] ?? null);
 
   $docenti_options = array_map(
-      function($d) {
-          return [
-              0 => $d['id'],
-              1 => $d['cognome_nome'],
-          ];
-      },
-      get_docenti()
+    function ($d) {
+      return [
+        0 => $d['id'],
+        1 => $d['cognome_nome'],
+      ];
+    },
+    get_docenti()
   );
   generate_filter_select('id_docente', 'Tutti i docenti', $docenti_options, $_GET['id_docente'] ?? null);
 }
 
 $classi_options = array_map(
-    function($c) {
-        return [
-            0 => $c['id'],
-            1 => $c['classe'],
-        ];
-    },
-    get_classi()
+  function ($c) {
+    return [
+      0 => $c['id'],
+      1 => $c['sezione_anno'],
+    ];
+  },
+  get_classi()
 );
 generate_filter_select('id_classe', 'Tutte le classi', $classi_options, $_GET['id_classe'] ?? null);
 
